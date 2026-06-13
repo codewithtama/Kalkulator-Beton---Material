@@ -16,11 +16,13 @@ import '../../widgets/summary_card.dart';
 class ResultScreen extends StatefulWidget {
   final CalculationCategory category;
   final Map<String, String> inputs;
+  final String? initialProjectName;
 
   const ResultScreen({
     super.key,
     required this.category,
     required this.inputs,
+    this.initialProjectName,
   });
 
   @override
@@ -35,7 +37,8 @@ class _ResultScreenState extends State<ResultScreen> {
   @override
   void initState() {
     super.initState();
-    _projectNameController.text = 'Proyek ${widget.category.nameIndo}';
+    _projectNameController.text = widget.initialProjectName ?? 'Proyek ${widget.category.nameIndo}';
+    _isSaved = widget.initialProjectName != null;
   }
 
   @override

@@ -245,6 +245,7 @@ class HistoryScreen extends StatelessWidget {
                             builder: (context) => ResultScreen(
                               category: categoryEnum,
                               inputs: Map<String, String>.from(project.inputs),
+                              initialProjectName: project.name,
                             ),
                           ),
                         );
