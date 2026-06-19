@@ -12,17 +12,20 @@ import '../../providers/calculator_provider.dart';
 import '../../providers/history_provider.dart';
 import '../../widgets/material_card.dart';
 import '../../widgets/summary_card.dart';
+import '../calculator/calculator_screen.dart';
 
 class ResultScreen extends StatefulWidget {
   final CalculationCategory category;
   final Map<String, String> inputs;
   final String? initialProjectName;
+  final String? projectId;
 
   const ResultScreen({
     super.key,
     required this.category,
     required this.inputs,
     this.initialProjectName,
+    this.projectId,
   });
 
   @override
@@ -38,7 +41,15 @@ class _ResultScreenState extends State<ResultScreen> {
   void initState() {
     super.initState();
     _projectNameController.text = widget.initialProjectName ?? 'Proyek ${widget.category.nameIndo}';
-    _isSaved = widget.initialProjectName != null;
+    _isSaved = widget.projectId != null;
+
+    _projectNameController.addListener(() {
+      if (_isSaved) {
+        setState(() {
+          _isSaved = false;
+        });
+      }
+    });
   }
 
   @override
@@ -76,6 +87,7 @@ class _ResultScreenState extends State<ResultScreen> {
     final serializedData = _result.requirements.map((req) => req.toJson()).toList();
 
     await historyProvider.saveProject(
+      id: widget.projectId,
       name: _projectNameController.text.trim(),
       category: widget.category.toString().split('.').last,
       inputs: widget.inputs,
@@ -89,7 +101,12 @@ class _ResultScreenState extends State<ResultScreen> {
 
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Kalkulasi berhasil disimpan ke Riwayat!'), backgroundColor: Colors.green),
+        SnackBar(
+          content: Text(widget.projectId != null
+              ? 'Kalkulasi berhasil diperbarui!'
+              : 'Kalkulasi berhasil disimpan ke Riwayat!'),
+          backgroundColor: Colors.green,
+        ),
       );
     }
   }
@@ -333,13 +350,42 @@ class _ResultScreenState extends State<ResultScreen> {
                 ],
               ),
               const SizedBox(height: 12),
+              if (widget.projectId != null) ...[
+                SizedBox(
+                  width: double.infinity,
+                  height: 52,
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => CalculatorScreen(
+                            category: widget.category,
+                            projectId: widget.projectId,
+                            initialInputs: widget.inputs,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.edit_note),
+                    label: const Text('Edit Parameter Perhitungan'),
+                    style: OutlinedButton.styleFrom(
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+              ],
               SizedBox(
                 width: double.infinity,
                 height: 52,
                 child: ElevatedButton.icon(
                   onPressed: _isSaved ? null : _saveProject,
-                  icon: Icon(_isSaved ? Icons.check : Icons.save),
-                  label: Text(_isSaved ? 'Tersimpan ke Riwayat' : 'Simpan Perhitungan'),
+                  icon: Icon(_isSaved ? Icons.check : (widget.projectId != null ? Icons.update : Icons.save)),
+                  label: Text(_isSaved
+                      ? (widget.projectId != null ? 'Perubahan Diperbarui' : 'Tersimpan ke Riwayat')
+                      : (widget.projectId != null ? 'Perbarui Perhitungan' : 'Simpan Perhitungan')),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: _isSaved ? Colors.grey : Theme.of(context).primaryColor,
                   ),

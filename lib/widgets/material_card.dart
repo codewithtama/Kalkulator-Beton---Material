@@ -29,6 +29,16 @@ class MaterialCard extends StatelessWidget {
       return Icons.format_paint;
     } else if (k.contains('plywood') || k.contains('multiplex')) {
       return Icons.view_agenda;
+    } else if (k.contains('batu_belah')) {
+      return Icons.foundation;
+    } else if (k.contains('besi')) {
+      return Icons.view_headline;
+    } else if (k.contains('kawat')) {
+      return Icons.cable;
+    } else if (k.contains('paku')) {
+      return Icons.push_pin;
+    } else if (k.contains('baja') || k.contains('sekrup')) {
+      return Icons.hardware;
     }
     return Icons.build;
   }
@@ -53,6 +63,14 @@ class MaterialCard extends StatelessWidget {
       return Colors.orange.shade800;
     } else if (k.contains('cat')) {
       return Colors.purple;
+    } else if (k.contains('batu_belah')) {
+      return Colors.brown.shade700;
+    } else if (k.contains('besi')) {
+      return Colors.blueGrey.shade800;
+    } else if (k.contains('kawat') || k.contains('paku')) {
+      return Colors.grey.shade700;
+    } else if (k.contains('baja') || k.contains('sekrup')) {
+      return Colors.cyan.shade800;
     }
     return Colors.amber;
   }
@@ -81,7 +99,7 @@ class MaterialCard extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: themeColor.withOpacity(0.12),
+                color: themeColor.withValues(alpha: 0.12),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Icon(

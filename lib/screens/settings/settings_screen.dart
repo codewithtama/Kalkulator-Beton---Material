@@ -32,6 +32,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
     {'key': 'kayu_usuk', 'label': 'Kayu Usuk 5x7', 'unit': 'batang'},
     {'key': 'kayu_reng', 'label': 'Kayu Reng 2x3', 'unit': 'batang'},
     {'key': 'cat_liter', 'label': 'Cat Dinding', 'unit': 'liter'},
+    {'key': 'besi_6', 'label': 'Besi Beton Ø6 mm', 'unit': 'batang'},
+    {'key': 'besi_8', 'label': 'Besi Beton Ø8 mm', 'unit': 'batang'},
+    {'key': 'besi_10', 'label': 'Besi Beton Ø10 mm', 'unit': 'batang'},
+    {'key': 'besi_12', 'label': 'Besi Beton Ø12 mm', 'unit': 'batang'},
+    {'key': 'besi_16', 'label': 'Besi Beton Ø16 mm', 'unit': 'batang'},
+    {'key': 'kawat_bendrat', 'label': 'Kawat Beton (Bendrat)', 'unit': 'kg'},
+    {'key': 'plywood_9mm', 'label': 'Triplek / Plywood 9mm', 'unit': 'lembar'},
+    {'key': 'paku', 'label': 'Paku Kayu / Beton', 'unit': 'kg'},
+    {'key': 'baja_c', 'label': 'Baja Ringan Canal C-75', 'unit': 'batang'},
+    {'key': 'baja_reng', 'label': 'Reng Baja Ringan', 'unit': 'batang'},
+    {'key': 'sekrup_truss', 'label': 'Sekrup Rangka (Truss)', 'unit': 'pcs'},
+    {'key': 'sekrup_genteng', 'label': 'Sekrup Genteng', 'unit': 'pcs'},
   ];
 
   @override
@@ -203,7 +215,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                                   ),
                                   contentPadding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                                   filled: true,
-                                  fillColor: Colors.grey.shade500.withOpacity(0.05),
+                                  fillColor: Colors.grey.shade500.withValues(alpha: 0.05),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(8),
                                     borderSide: BorderSide.none,

@@ -4,7 +4,9 @@ import 'package:intl/intl.dart';
 
 import '../../core/constants.dart';
 import '../../providers/history_provider.dart';
+import '../../data/models/project.dart';
 import '../result/result_screen.dart';
+import '../calculator/calculator_screen.dart';
 
 class HistoryScreen extends StatelessWidget {
   const HistoryScreen({super.key});
@@ -29,6 +31,12 @@ class HistoryScreen extends StatelessWidget {
           return Icons.roofing;
         case CalculationCategory.cat:
           return Icons.format_paint;
+        case CalculationCategory.pondasiBatuKali:
+          return Icons.foundation;
+        case CalculationCategory.kolomBalok:
+          return Icons.view_week;
+        case CalculationCategory.bajaRingan:
+          return Icons.architecture;
       }
     } catch (_) {
       return Icons.construction;
@@ -55,10 +63,72 @@ class HistoryScreen extends StatelessWidget {
           return const Color(0xFF5D4037);
         case CalculationCategory.cat:
           return const Color(0xFF8E24AA);
+        case CalculationCategory.pondasiBatuKali:
+          return const Color(0xFF5D4037);
+        case CalculationCategory.kolomBalok:
+          return const Color(0xFF1E88E5);
+        case CalculationCategory.bajaRingan:
+          return const Color(0xFF00ACC1);
       }
     } catch (_) {
       return Colors.amber;
     }
+  }
+
+  void _showRenameDialog(BuildContext context, HistoryProvider historyProvider, Project project) {
+    final controller = TextEditingController(text: project.name);
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Ubah Nama Proyek'),
+        content: TextField(
+          controller: controller,
+          decoration: const InputDecoration(
+            labelText: 'Nama Proyek Baru',
+            border: OutlineInputBorder(),
+          ),
+          autofocus: true,
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () {
+              if (controller.text.trim().isNotEmpty) {
+                historyProvider.renameProject(project.id, controller.text.trim());
+              }
+              Navigator.pop(context);
+            },
+            child: const Text('Simpan'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showDeleteDialog(BuildContext context, HistoryProvider historyProvider, Project project) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Hapus Riwayat?'),
+        content: Text('Apakah Anda yakin ingin menghapus "${project.name}" dari riwayat?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text('Batal'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.pop(context);
+              historyProvider.deleteProject(project.id);
+            },
+            child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -178,7 +248,7 @@ class HistoryScreen extends StatelessWidget {
                       leading: Container(
                         padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          color: catColor.withOpacity(0.1),
+                          color: catColor.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                         ),
                         child: Icon(
@@ -213,30 +283,80 @@ class HistoryScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.delete_outline, color: Colors.redAccent),
-                        onPressed: () {
-                          showDialog(
-                            context: context,
-                            builder: (context) => AlertDialog(
-                              title: const Text('Hapus Riwayat?'),
-                              content: Text('Apakah Anda yakin ingin menghapus "${project.name}" dari riwayat?'),
-                              actions: [
-                                TextButton(
-                                  onPressed: () => Navigator.pop(context),
-                                  child: const Text('Batal'),
+                      trailing: PopupMenuButton<String>(
+                        icon: const Icon(Icons.more_vert, color: Colors.blueGrey),
+                        onSelected: (value) {
+                          if (value == 'view') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => ResultScreen(
+                                  category: categoryEnum,
+                                  inputs: Map<String, String>.from(project.inputs),
+                                  initialProjectName: project.name,
+                                  projectId: project.id,
                                 ),
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    historyProvider.deleteProject(project.id);
-                                  },
-                                  child: const Text('Hapus', style: TextStyle(color: Colors.red)),
+                              ),
+                            );
+                          } else if (value == 'edit') {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CalculatorScreen(
+                                  category: categoryEnum,
+                                  projectId: project.id,
+                                  initialInputs: Map<String, String>.from(project.inputs),
                                 ),
+                              ),
+                            );
+                          } else if (value == 'rename') {
+                            _showRenameDialog(context, historyProvider, project);
+                          } else if (value == 'delete') {
+                            _showDeleteDialog(context, historyProvider, project);
+                          }
+                        },
+                        itemBuilder: (context) => [
+                          const PopupMenuItem(
+                            value: 'view',
+                            child: Row(
+                              children: [
+                                Icon(Icons.analytics_outlined, size: 20, color: Colors.blue),
+                                SizedBox(width: 8),
+                                Text('Lihat Hasil'),
                               ],
                             ),
-                          );
-                        },
+                          ),
+                          const PopupMenuItem(
+                            value: 'edit',
+                            child: Row(
+                              children: [
+                                Icon(Icons.edit_note, size: 20, color: Colors.orange),
+                                SizedBox(width: 8),
+                                Text('Edit Parameter'),
+                              ],
+                            ),
+                          ),
+                          const PopupMenuItem(
+                            value: 'rename',
+                            child: Row(
+                              children: [
+                                Icon(Icons.edit, size: 20, color: Colors.teal),
+                                SizedBox(width: 8),
+                                Text('Ubah Nama'),
+                              ],
+                            ),
+                          ),
+                          const PopupMenuItem(
+                            value: 'delete',
+                            child: Row(
+                              children: [
+                                Icon(Icons.delete_outline, size: 20, color: Colors.red),
+                                SizedBox(width: 8),
+                                Text('Hapus'),
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                       onTap: () {
                         Navigator.push(
@@ -246,6 +366,7 @@ class HistoryScreen extends StatelessWidget {
                               category: categoryEnum,
                               inputs: Map<String, String>.from(project.inputs),
                               initialProjectName: project.name,
+                              projectId: project.id,
                             ),
                           ),
                         );

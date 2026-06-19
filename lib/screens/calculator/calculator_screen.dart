@@ -5,8 +5,15 @@ import '../result/result_screen.dart';
 
 class CalculatorScreen extends StatefulWidget {
   final CalculationCategory category;
+  final String? projectId;
+  final Map<String, String>? initialInputs;
 
-  const CalculatorScreen({super.key, required this.category});
+  const CalculatorScreen({
+    super.key,
+    required this.category,
+    this.projectId,
+    this.initialInputs,
+  });
 
   @override
   State<CalculatorScreen> createState() => _CalculatorScreenState();
@@ -25,6 +32,14 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String _selectedJenisGenteng = 'Tanah';
   int _selectedCatLapisan = 2;
 
+  // New Dropdown States
+  String _selectedAdukanPondasi = '1:4';
+  int _selectedBesiUtama = 10;
+  int _selectedJumlahUtama = 4;
+  int _selectedBesiBegel = 6;
+  bool _isBekistingEnabled = true;
+  String _selectedMutuBetonStruktur = 'K-225';
+
   @override
   void initState() {
     super.initState();
@@ -32,32 +47,65 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   }
 
   void _initControllers() {
+    final initVal = widget.initialInputs;
+    
+    // Helper to get initial values
+    String txt(String key, {String def = ''}) {
+      return initVal?[key] ?? def;
+    }
+
     switch (widget.category) {
       case CalculationCategory.beton:
-        _controllers['volume'] = TextEditingController();
+        _controllers['volume'] = TextEditingController(text: txt('volume'));
+        _selectedMutuBeton = txt('mutu', def: 'K-175');
         break;
       case CalculationCategory.pondasi:
-        _controllers['panjang'] = TextEditingController();
-        _controllers['lebar'] = TextEditingController();
-        _controllers['kedalaman'] = TextEditingController();
+        _controllers['panjang'] = TextEditingController(text: txt('panjang'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar'));
+        _controllers['kedalaman'] = TextEditingController(text: txt('kedalaman'));
         break;
       case CalculationCategory.dinding:
-        _controllers['panjang'] = TextEditingController();
-        _controllers['tinggi'] = TextEditingController();
+        _controllers['panjang'] = TextEditingController(text: txt('panjang'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi'));
+        _selectedJenisBata = txt('jenisBata', def: 'Merah');
         break;
       case CalculationCategory.plester:
-        _controllers['luas'] = TextEditingController();
-        _controllers['tebalPlester'] = TextEditingController(text: '1.5');
+        _controllers['luas'] = TextEditingController(text: txt('luas'));
+        _controllers['tebalPlester'] = TextEditingController(text: txt('tebalPlester', def: '1.5'));
         break;
       case CalculationCategory.keramik:
-        _controllers['panjang'] = TextEditingController();
-        _controllers['lebar'] = TextEditingController();
+        _controllers['panjang'] = TextEditingController(text: txt('panjang'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar'));
+        _selectedUkuranKeramik = txt('ukuran', def: '30x30');
         break;
       case CalculationCategory.atap:
-        _controllers['luas'] = TextEditingController();
+        _controllers['luas'] = TextEditingController(text: txt('luas'));
+        _selectedJenisGenteng = txt('jenisGenteng', def: 'Tanah');
         break;
       case CalculationCategory.cat:
-        _controllers['luas'] = TextEditingController();
+        _controllers['luas'] = TextEditingController(text: txt('luas'));
+        _selectedCatLapisan = int.tryParse(txt('lapisan', def: '2')) ?? 2;
+        break;
+      case CalculationCategory.pondasiBatuKali:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang'));
+        _controllers['lebarAtas'] = TextEditingController(text: txt('lebarAtas', def: '0.3'));
+        _controllers['lebarBawah'] = TextEditingController(text: txt('lebarBawah', def: '0.6'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '0.8'));
+        _selectedAdukanPondasi = txt('adukan', def: '1:4');
+        break;
+      case CalculationCategory.kolomBalok:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '15'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '15'));
+        _selectedBesiUtama = int.tryParse(txt('diameterUtama', def: '10')) ?? 10;
+        _selectedJumlahUtama = int.tryParse(txt('jumlahUtama', def: '4')) ?? 4;
+        _selectedBesiBegel = int.tryParse(txt('diameterBegel', def: '6')) ?? 6;
+        _controllers['jarakBegel'] = TextEditingController(text: txt('jarakBegel', def: '15'));
+        _isBekistingEnabled = txt('bekisting', def: 'true') == 'true';
+        _selectedMutuBetonStruktur = txt('mutuBeton', def: 'K-225');
+        break;
+      case CalculationCategory.bajaRingan:
+        _controllers['luasAtap'] = TextEditingController(text: txt('luasAtap'));
         break;
     }
   }
@@ -96,6 +144,16 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
       case CalculationCategory.cat:
         inputs['lapisan'] = _selectedCatLapisan.toString();
         break;
+      case CalculationCategory.pondasiBatuKali:
+        inputs['adukan'] = _selectedAdukanPondasi;
+        break;
+      case CalculationCategory.kolomBalok:
+        inputs['diameterUtama'] = _selectedBesiUtama.toString();
+        inputs['jumlahUtama'] = _selectedJumlahUtama.toString();
+        inputs['diameterBegel'] = _selectedBesiBegel.toString();
+        inputs['bekisting'] = _isBekistingEnabled.toString();
+        inputs['mutuBeton'] = _selectedMutuBetonStruktur;
+        break;
       default:
         break;
     }
@@ -106,6 +164,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         builder: (context) => ResultScreen(
           category: widget.category,
           inputs: inputs,
+          projectId: widget.projectId,
         ),
       ),
     );
@@ -130,7 +189,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: _selectedMutuBeton,
+              initialValue: _selectedMutuBeton,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey.shade100,
@@ -201,7 +260,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: _selectedJenisBata,
+              initialValue: _selectedJenisBata,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey.shade100,
@@ -267,7 +326,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: _selectedUkuranKeramik,
+              initialValue: _selectedUkuranKeramik,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey.shade100,
@@ -308,7 +367,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<String>(
-              value: _selectedJenisGenteng,
+              initialValue: _selectedJenisGenteng,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey.shade100,
@@ -356,7 +415,7 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
             ),
             const SizedBox(height: 8),
             DropdownButtonFormField<int>(
-              value: _selectedCatLapisan,
+              initialValue: _selectedCatLapisan,
               decoration: InputDecoration(
                 filled: true,
                 fillColor: Colors.grey.shade100,
@@ -377,6 +436,265 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                   setState(() => _selectedCatLapisan = val);
                 }
               },
+            ),
+          ],
+        );
+
+      case CalculationCategory.pondasiBatuKali:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(
+              controller: _controllers['panjang']!,
+              labelText: 'Panjang Pondasi',
+              suffixText: 'm',
+              hintText: 'Contoh: 12.0',
+            ),
+            CustomInputField(
+              controller: _controllers['lebarAtas']!,
+              labelText: 'Lebar Atas Pondasi',
+              suffixText: 'm',
+              hintText: 'Contoh: 0.3',
+            ),
+            CustomInputField(
+              controller: _controllers['lebarBawah']!,
+              labelText: 'Lebar Bawah Pondasi',
+              suffixText: 'm',
+              hintText: 'Contoh: 0.6',
+            ),
+            CustomInputField(
+              controller: _controllers['tinggi']!,
+              labelText: 'Tinggi Pondasi / Kedalaman',
+              suffixText: 'm',
+              hintText: 'Contoh: 0.8',
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Perbandingan Campuran Semen & Pasir (SNI)',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF263238)),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedAdukanPondasi,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              items: ['1:3', '1:4', '1:5', '1:6'].map((String val) {
+                return DropdownMenuItem<String>(
+                  value: val,
+                  child: Text('Campuran $val', style: const TextStyle(fontWeight: FontWeight.bold)),
+                );
+              }).toList(),
+              onChanged: (val) {
+                if (val != null) {
+                  setState(() => _selectedAdukanPondasi = val);
+                }
+              },
+            ),
+          ],
+        );
+
+      case CalculationCategory.kolomBalok:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(
+              controller: _controllers['panjang']!,
+              labelText: 'Panjang Total Struktur (Kolom/Balok/Sloof)',
+              suffixText: 'm',
+              hintText: 'Contoh: 12.0',
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: CustomInputField(
+                    controller: _controllers['lebar']!,
+                    labelText: 'Lebar Penampang',
+                    suffixText: 'cm',
+                    hintText: '15',
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomInputField(
+                    controller: _controllers['tinggi']!,
+                    labelText: 'Tinggi Penampang',
+                    suffixText: 'cm',
+                    hintText: '15',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Besi Utama',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF263238)),
+                      ),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<int>(
+                        initialValue: _selectedBesiUtama,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        ),
+                        items: [8, 10, 12, 16].map((int val) {
+                          return DropdownMenuItem<int>(
+                            value: val,
+                            child: Text('Ø $val mm', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          if (val != null) setState(() => _selectedBesiUtama = val);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Jumlah Batang',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF263238)),
+                      ),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<int>(
+                        initialValue: _selectedJumlahUtama,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        ),
+                        items: [4, 6].map((int val) {
+                          return DropdownMenuItem<int>(
+                            value: val,
+                            child: Text('$val bh', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          if (val != null) setState(() => _selectedJumlahUtama = val);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        'Besi Begel',
+                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13, color: Color(0xFF263238)),
+                      ),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<int>(
+                        initialValue: _selectedBesiBegel,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Colors.grey.shade100,
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+                          border: OutlineInputBorder(borderRadius: BorderRadius.circular(10), borderSide: BorderSide.none),
+                        ),
+                        items: [6, 8].map((int val) {
+                          return DropdownMenuItem<int>(
+                            value: val,
+                            child: Text('Ø $val mm', style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                          );
+                        }).toList(),
+                        onChanged: (val) {
+                          if (val != null) setState(() => _selectedBesiBegel = val);
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomInputField(
+                    controller: _controllers['jarakBegel']!,
+                    labelText: 'Jarak Begel',
+                    suffixText: 'cm',
+                    hintText: '15',
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Text(
+              'Mutu Beton Struktur (SNI)',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Color(0xFF263238)),
+            ),
+            const SizedBox(height: 8),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedMutuBetonStruktur,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.grey.shade100,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide.none,
+                ),
+              ),
+              items: ['K-175', 'K-225', 'K-250', 'K-300'].map((String val) {
+                return DropdownMenuItem<String>(
+                  value: val,
+                  child: Text(val, style: const TextStyle(fontWeight: FontWeight.bold)),
+                );
+              }).toList(),
+              onChanged: (val) {
+                if (val != null) {
+                  setState(() => _selectedMutuBetonStruktur = val);
+                }
+              },
+            ),
+            const SizedBox(height: 16),
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.grey.shade100,
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: SwitchListTile(
+                title: const Text('Gunakan Bekisting', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+                subtitle: const Text('Hitung triplek 9mm, kaso 5x7, & paku', style: TextStyle(fontSize: 11)),
+                value: _isBekistingEnabled,
+                activeThumbColor: Theme.of(context).primaryColor,
+                onChanged: (val) {
+                  setState(() => _isBekistingEnabled = val);
+                },
+              ),
+            ),
+          ],
+        );
+
+      case CalculationCategory.bajaRingan:
+        return Column(
+          children: [
+            CustomInputField(
+              controller: _controllers['luasAtap']!,
+              labelText: 'Luas Atap',
+              suffixText: 'm²',
+              hintText: 'Contoh: 120.0',
             ),
           ],
         );
@@ -404,10 +722,10 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
                       Container(
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(0.08),
+                          color: Theme.of(context).primaryColor.withValues(alpha: 0.08),
                           borderRadius: BorderRadius.circular(16),
                           border: Border.all(
-                            color: Theme.of(context).primaryColor.withOpacity(0.2),
+                            color: Theme.of(context).primaryColor.withValues(alpha: 0.2),
                           ),
                         ),
                         child: Row(

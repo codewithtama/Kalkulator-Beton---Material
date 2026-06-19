@@ -23,9 +23,10 @@ class HistoryProvider with ChangeNotifier {
     required Map<String, String> inputs,
     required List<Map<dynamic, dynamic>> requirementsData,
     required double totalCost,
+    String? id,
   }) async {
     final project = Project(
-      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      id: id ?? DateTime.now().millisecondsSinceEpoch.toString(),
       name: name,
       date: DateTime.now(),
       category: category,
@@ -35,6 +36,23 @@ class HistoryProvider with ChangeNotifier {
     );
     await _repo.saveProject(project);
     loadProjects();
+  }
+
+  Future<void> renameProject(String id, String newName) async {
+    try {
+      final existing = _projects.firstWhere((p) => p.id == id);
+      final updatedProject = Project(
+        id: existing.id,
+        name: newName,
+        date: existing.date,
+        category: existing.category,
+        inputs: existing.inputs,
+        requirementsData: existing.requirementsData,
+        totalCost: existing.totalCost,
+      );
+      await _repo.saveProject(updatedProject);
+      loadProjects();
+    } catch (_) {}
   }
 
   Future<void> deleteProject(String id) async {

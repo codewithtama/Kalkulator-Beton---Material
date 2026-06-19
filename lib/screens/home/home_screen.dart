@@ -12,7 +12,7 @@ class HomeScreen extends StatelessWidget {
       case CalculationCategory.beton:
         return Icons.opacity; // Water/Liquid Concrete blend
       case CalculationCategory.pondasi:
-        return Icons.foundation; // Foundation
+        return Icons.layers; // Concrete/Subbase foundation
       case CalculationCategory.dinding:
         return Icons.view_cozy; // Brickwork
       case CalculationCategory.plester:
@@ -23,6 +23,12 @@ class HomeScreen extends StatelessWidget {
         return Icons.roofing; // Roof
       case CalculationCategory.cat:
         return Icons.format_paint; // Paint brush
+      case CalculationCategory.pondasiBatuKali:
+        return Icons.foundation; // Stone foundation
+      case CalculationCategory.kolomBalok:
+        return Icons.view_week; // Reinforced concrete columns/beams
+      case CalculationCategory.bajaRingan:
+        return Icons.architecture; // Lightweight steel truss
     }
   }
 
@@ -31,7 +37,7 @@ class HomeScreen extends StatelessWidget {
       case CalculationCategory.beton:
         return const Color(0xFF78909C);
       case CalculationCategory.pondasi:
-        return const Color(0xFF8D6E63);
+        return const Color(0xFF607D8B);
       case CalculationCategory.dinding:
         return const Color(0xFFE64A19);
       case CalculationCategory.plester:
@@ -39,9 +45,15 @@ class HomeScreen extends StatelessWidget {
       case CalculationCategory.keramik:
         return const Color(0xFF00897B);
       case CalculationCategory.atap:
-        return const Color(0xFF5D4037);
+        return const Color(0xFF795548);
       case CalculationCategory.cat:
         return const Color(0xFF8E24AA);
+      case CalculationCategory.pondasiBatuKali:
+        return const Color(0xFF5D4037);
+      case CalculationCategory.kolomBalok:
+        return const Color(0xFF1E88E5);
+      case CalculationCategory.bajaRingan:
+        return const Color(0xFF00ACC1);
     }
   }
 
@@ -61,6 +73,12 @@ class HomeScreen extends StatelessWidget {
         return 'Genteng & struktur kayu';
       case CalculationCategory.cat:
         return 'Kebutuhan volume cat';
+      case CalculationCategory.pondasiBatuKali:
+        return 'Batu belah, semen, & pasir';
+      case CalculationCategory.kolomBalok:
+        return 'Beton, pembesian, & bekisting';
+      case CalculationCategory.bajaRingan:
+        return 'Kanal C, reng, & sekrup rangka';
     }
   }
 
@@ -98,7 +116,7 @@ class HomeScreen extends StatelessWidget {
                       child: Icon(
                         Icons.construction,
                         size: 180,
-                        color: const Color(0xFFFFD54F).withOpacity(0.4),
+                        color: const Color(0xFFFFD54F).withValues(alpha: 0.4),
                       ),
                     ),
                     Positioned(
@@ -188,7 +206,7 @@ class HomeScreen extends StatelessWidget {
                             Container(
                               padding: const EdgeInsets.all(10),
                               decoration: BoxDecoration(
-                                color: color.withOpacity(0.12),
+                                color: color.withValues(alpha: 0.12),
                                 borderRadius: BorderRadius.circular(12),
                               ),
                               child: Icon(

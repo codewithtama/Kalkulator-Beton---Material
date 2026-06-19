@@ -15,6 +15,9 @@ enum CalculationCategory {
   keramik,
   atap,
   cat,
+  pondasiBatuKali,
+  kolomBalok,
+  bajaRingan,
 }
 
 extension CalculationCategoryExtension on CalculationCategory {
@@ -23,7 +26,7 @@ extension CalculationCategoryExtension on CalculationCategory {
       case CalculationCategory.beton:
         return 'Beton (Campuran)';
       case CalculationCategory.pondasi:
-        return 'Pondasi';
+        return 'Pondasi Beton';
       case CalculationCategory.dinding:
         return 'Dinding Bata';
       case CalculationCategory.plester:
@@ -31,9 +34,15 @@ extension CalculationCategoryExtension on CalculationCategory {
       case CalculationCategory.keramik:
         return 'Keramik Lantai';
       case CalculationCategory.atap:
-        return 'Atap';
+        return 'Atap Kayu';
       case CalculationCategory.cat:
         return 'Cat Dinding';
+      case CalculationCategory.pondasiBatuKali:
+        return 'Pondasi Batu Kali';
+      case CalculationCategory.kolomBalok:
+        return 'Kolom & Balok';
+      case CalculationCategory.bajaRingan:
+        return 'Atap Baja Ringan';
     }
   }
 
@@ -54,6 +63,12 @@ extension CalculationCategoryExtension on CalculationCategory {
         return 'home';
       case CalculationCategory.cat:
         return 'brush';
+      case CalculationCategory.pondasiBatuKali:
+        return 'foundation';
+      case CalculationCategory.kolomBalok:
+        return 'view_week';
+      case CalculationCategory.bajaRingan:
+        return 'architecture';
     }
   }
 }
@@ -86,4 +101,18 @@ class MaterialDefaultPrices {
   static const double rengWood = 18000.0;      // per batang
   
   static const double catLiter = 45000.0;      // per liter (approx Rp 225k/5L)
+
+  // New materials
+  static const double besi6 = 35000.0;         // per batang 12m
+  static const double besi8 = 55000.0;         // per batang 12m
+  static const double besi10 = 85000.0;        // per batang 12m
+  static const double besi12 = 115000.0;       // per batang 12m
+  static const double besi16 = 190000.0;       // per batang 12m
+  static const double kawatBendrat = 25000.0;  // per kg
+  static const double plywood9mm = 120000.0;   // per lembar
+  static const double paku = 20000.0;          // per kg
+  static const double bajaC = 95000.0;         // per batang 6m
+  static const double bajaReng = 45000.0;      // per batang 6m
+  static const double sekrupTruss = 250.0;     // per pcs
+  static const double sekrupGenteng = 350.0;   // per pcs
 }

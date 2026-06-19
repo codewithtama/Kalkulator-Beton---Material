@@ -513,4 +513,354 @@ class Formulas {
       ],
     );
   }
+
+  /// 8. Pondasi Batu Kali (Trapesoid)
+  /// Input: panjang, lebar atas, lebar bawah, tinggi (meter)
+  /// Adukan: '1:3', '1:4', '1:5', '1:6'
+  static CalculationResult calculatePondasiBatuKali({
+    required double panjang,
+    required double lebarAtas,
+    required double lebarBawah,
+    required double tinggi,
+    required String adukan,
+    required Map<String, double> prices,
+  }) {
+    final volumeGalian = panjang * lebarBawah * tinggi;
+    
+    // Pasir urug tebal 5cm di bawah pondasi
+    final volumePasirUrug = panjang * lebarBawah * 0.05;
+    
+    // Volume Pondasi (Trapesium)
+    final volumePondasi = panjang * ((lebarAtas + lebarBawah) / 2) * tinggi;
+    
+    // Koefisien SNI per m3 pondasi batu kali:
+    // Batu Belah: 1.2 m3
+    // Semen Portland (kg):
+    // - 1:3 = 202 kg
+    // - 1:4 = 163 kg
+    // - 1:5 = 136 kg
+    // - 1:6 = 117 kg
+    // Pasir Pasang (m3):
+    // - 1:3 = 0.485 m3
+    // - 1:4 = 0.520 m3
+    // - 1:5 = 0.544 m3
+    // - 1:6 = 0.561 m3
+    double cementCoeff = 163.0; // Default 1:4
+    double sandCoeff = 0.520;   // Default 1:4
+
+    switch (adukan) {
+      case '1:3':
+        cementCoeff = 202.0;
+        sandCoeff = 0.485;
+        break;
+      case '1:4':
+        cementCoeff = 163.0;
+        sandCoeff = 0.520;
+        break;
+      case '1:5':
+        cementCoeff = 136.0;
+        sandCoeff = 0.544;
+        break;
+      case '1:6':
+        cementCoeff = 117.0;
+        sandCoeff = 0.561;
+        break;
+    }
+
+    final batuBelahM3 = 1.2 * volumePondasi;
+    final semenSak = (cementCoeff * volumePondasi) / 50.0; // 50kg bag
+    final pasirPondasiM3 = sandCoeff * volumePondasi;
+
+    final batuPrice = prices['batu_belah'] ?? MaterialDefaultPrices.batuBelah;
+    final semenPrice = prices['semen_sak'] ?? MaterialDefaultPrices.semenSak;
+    final pasirPrice = prices['pasir'] ?? MaterialDefaultPrices.pasir;
+
+    return CalculationResult(
+      requirements: [
+        MaterialRequirement(
+          key: 'galian',
+          name: 'Volume Galian Tanah',
+          quantity: double.parse(volumeGalian.toStringAsFixed(2)),
+          unit: 'm³',
+          unitPrice: 0.0,
+        ),
+        MaterialRequirement(
+          key: 'pasir_urug',
+          name: 'Pasir Urug Bawah Pondasi (Tebal 5cm)',
+          quantity: double.parse(volumePasirUrug.toStringAsFixed(2)),
+          unit: 'm³',
+          unitPrice: pasirPrice,
+        ),
+        MaterialRequirement(
+          key: 'batu_belah',
+          name: 'Batu Belah / Batu Kali',
+          quantity: double.parse(batuBelahM3.toStringAsFixed(2)),
+          unit: 'm³',
+          unitPrice: batuPrice,
+        ),
+        MaterialRequirement(
+          key: 'semen_sak',
+          name: 'Semen Portland (Adukan $adukan)',
+          quantity: double.parse(semenSak.toStringAsFixed(2)),
+          unit: 'sak',
+          unitPrice: semenPrice,
+        ),
+        MaterialRequirement(
+          key: 'pasir',
+          name: 'Pasir Pasang (Adukan $adukan)',
+          quantity: double.parse(pasirPondasiM3.toStringAsFixed(2)),
+          unit: 'm³',
+          unitPrice: pasirPrice,
+        ),
+      ],
+    );
+  }
+
+  /// 9. Kolom & Balok (Struktur Beton Bertulang)
+  /// Input: panjang total (m), lebar penampang (cm), tinggi penampang (cm)
+  /// Besi Utama: diameter (8, 10, 12, 16 mm), jumlah (4, 6 batang)
+  /// Besi Begel: diameter (6, 8 mm), jarak (10, 15, 20 cm)
+  /// Bekisting: bool
+  /// Mutu Beton: K-175, K-225, K-250, K-300
+  static CalculationResult calculateKolomBalok({
+    required double panjang,
+    required double lebarCm,
+    required double tinggiCm,
+    required int diameterUtama,
+    required int jumlahUtama,
+    required int diameterBegel,
+    required double jarakBegelCm,
+    required bool bekisting,
+    required String mutuBeton,
+    required Map<String, double> prices,
+  }) {
+    final lebarM = lebarCm / 100.0;
+    final tinggiM = tinggiCm / 100.0;
+    final volumeBeton = panjang * lebarM * tinggiM;
+
+    // 1. Concrete ingredients using concrete mix logic
+    double semenPerM3 = 371.0; // K-225 default
+    double pasirPerM3 = 698.0;
+    double kerikilPerM3 = 1047.0;
+    const double airPerM3 = 215.0;
+
+    switch (mutuBeton) {
+      case 'K-175':
+        semenPerM3 = 326.0;
+        pasirPerM3 = 760.0;
+        kerikilPerM3 = 1029.0;
+        break;
+      case 'K-225':
+        semenPerM3 = 371.0;
+        pasirPerM3 = 698.0;
+        kerikilPerM3 = 1047.0;
+        break;
+      case 'K-250':
+        semenPerM3 = 384.0;
+        pasirPerM3 = 692.0;
+        kerikilPerM3 = 1039.0;
+        break;
+      case 'K-300':
+        semenPerM3 = 413.0;
+        pasirPerM3 = 681.0;
+        kerikilPerM3 = 1021.0;
+        break;
+    }
+
+    final semenSak = (semenPerM3 * volumeBeton) / 50.0;
+    final pasirM3 = (pasirPerM3 * volumeBeton) / sandDensity;
+    final kerikilM3 = (kerikilPerM3 * volumeBeton) / gravelDensity;
+    final airLiters = airPerM3 * volumeBeton;
+
+    // 2. Reinforcement steel (Pembesian)
+    final weightUtamaPerMeter = 0.006165 * diameterUtama * diameterUtama;
+    final totalPanjangUtama = panjang * jumlahUtama;
+    final totalWeightUtama = totalPanjangUtama * weightUtamaPerMeter;
+    final batangUtama = (totalPanjangUtama / 12.0).ceilToDouble(); // 12m standard length
+
+    // Sengkang/Begel
+    final lebarBegelCm = math.max(2.0, lebarCm - 4.0);
+    final tinggiBegelCm = math.max(2.0, tinggiCm - 4.0);
+    final panjangSatuBegelM = ((2.0 * (lebarBegelCm + tinggiBegelCm)) + 10.0) / 100.0;
+    final jumlahBegel = ((panjang * 100.0) / jarakBegelCm).ceil() + 1;
+    final totalPanjangBegel = jumlahBegel * panjangSatuBegelM;
+    final weightBegelPerMeter = 0.006165 * diameterBegel * diameterBegel;
+    final totalWeightBegel = totalPanjangBegel * weightBegelPerMeter;
+    final batangBegel = (totalPanjangBegel / 12.0).ceilToDouble();
+
+    // Wire tie (Kawat bendrat): 1.5% of total steel weight
+    final kawatBendratKg = (totalWeightUtama + totalWeightBegel) * 0.015;
+
+    // Prices mapping
+    final semenPrice = prices['semen_sak'] ?? MaterialDefaultPrices.semenSak;
+    final pasirPrice = prices['pasir'] ?? MaterialDefaultPrices.pasir;
+    final kerikilPrice = prices['kerikil'] ?? MaterialDefaultPrices.kerikil;
+    final airPrice = prices['air'] ?? MaterialDefaultPrices.air;
+    
+    final priceKeyUtama = 'besi_$diameterUtama';
+    final priceKeyBegel = 'besi_$diameterBegel';
+    
+    final besiUtamaPrice = prices[priceKeyUtama] ?? _getDefaultBesiPrice(diameterUtama);
+    final besiBegelPrice = prices[priceKeyBegel] ?? _getDefaultBesiPrice(diameterBegel);
+    final kawatPrice = prices['kawat_bendrat'] ?? MaterialDefaultPrices.kawatBendrat;
+
+    final requirements = <MaterialRequirement>[
+      MaterialRequirement(
+        key: 'semen_sak',
+        name: 'Semen Portland (Beton $mutuBeton)',
+        quantity: double.parse(semenSak.toStringAsFixed(2)),
+        unit: 'sak',
+        unitPrice: semenPrice,
+      ),
+      MaterialRequirement(
+        key: 'pasir',
+        name: 'Pasir Beton',
+        quantity: double.parse(pasirM3.toStringAsFixed(2)),
+        unit: 'm³',
+        unitPrice: pasirPrice,
+      ),
+      MaterialRequirement(
+        key: 'kerikil',
+        name: 'Kerikil / Batu Pecah',
+        quantity: double.parse(kerikilM3.toStringAsFixed(2)),
+        unit: 'm³',
+        unitPrice: kerikilPrice,
+      ),
+      MaterialRequirement(
+        key: 'air',
+        name: 'Air',
+        quantity: double.parse(airLiters.toStringAsFixed(1)),
+        unit: 'liter',
+        unitPrice: airPrice,
+      ),
+      MaterialRequirement(
+        key: priceKeyUtama,
+        name: 'Besi Beton Utama Ø$diameterUtama mm (Batang 12m)',
+        quantity: batangUtama,
+        unit: 'batang',
+        unitPrice: besiUtamaPrice,
+      ),
+      MaterialRequirement(
+        key: priceKeyBegel,
+        name: 'Besi Begel / Sengkang Ø$diameterBegel mm (Batang 12m)',
+        quantity: batangBegel,
+        unit: 'batang',
+        unitPrice: besiBegelPrice,
+      ),
+      MaterialRequirement(
+        key: 'kawat_bendrat',
+        name: 'Kawat Beton (Bendrat)',
+        quantity: double.parse(kawatBendratKg.toStringAsFixed(2)),
+        unit: 'kg',
+        unitPrice: kawatPrice,
+      ),
+    ];
+
+    // 3. Bekisting (Formwork)
+    if (bekisting) {
+      final luasBekisting = (2.0 * (lebarM + tinggiM)) * panjang;
+      
+      final plywoodQty = (luasBekisting * 0.35).ceilToDouble();
+      final kasoQty = (luasBekisting * 0.5).ceilToDouble();
+      final pakuQty = luasBekisting * 0.3;
+
+      final plywoodPrice = prices['plywood_9mm'] ?? MaterialDefaultPrices.plywood9mm;
+      final kasoPrice = prices['kayu_usuk'] ?? MaterialDefaultPrices.usukWood;
+      final pakuPrice = prices['paku'] ?? MaterialDefaultPrices.paku;
+
+      requirements.addAll([
+        MaterialRequirement(
+          key: 'plywood_9mm',
+          name: 'Triplek / Plywood 9mm Bekisting',
+          quantity: plywoodQty,
+          unit: 'lembar',
+          unitPrice: plywoodPrice,
+        ),
+        MaterialRequirement(
+          key: 'kayu_usuk',
+          name: 'Kayu Kaso 5x7 (Batang 4m) Bekisting',
+          quantity: kasoQty,
+          unit: 'batang',
+          unitPrice: kasoPrice,
+        ),
+        MaterialRequirement(
+          key: 'paku',
+          name: 'Paku Beton / Kayu (5-7cm)',
+          quantity: double.parse(pakuQty.toStringAsFixed(2)),
+          unit: 'kg',
+          unitPrice: pakuPrice,
+        ),
+      ]);
+    }
+
+    return CalculationResult(requirements: requirements);
+  }
+
+  static double _getDefaultBesiPrice(int diameter) {
+    switch (diameter) {
+      case 6:
+        return MaterialDefaultPrices.besi6;
+      case 8:
+        return MaterialDefaultPrices.besi8;
+      case 10:
+        return MaterialDefaultPrices.besi10;
+      case 12:
+        return MaterialDefaultPrices.besi12;
+      case 16:
+        return MaterialDefaultPrices.besi16;
+      default:
+        return 50000.0;
+    }
+  }
+
+  /// 10. Rangka Atap Baja Ringan (Galvalum)
+  /// Input: luas atap (m2)
+  /// Output: Canal C, Reng, Sekrup
+  static CalculationResult calculateBajaRingan({
+    required double luasAtap,
+    required Map<String, double> prices,
+  }) {
+    final kanalCQty = (luasAtap * 1.2).ceilToDouble();
+    final rengQty = (luasAtap * 1.5).ceilToDouble();
+    final sekrupTrussQty = (luasAtap * 10.0).ceilToDouble();
+    final sekrupGentengQty = (luasAtap * 12.0).ceilToDouble();
+
+    final kanalPrice = prices['baja_c'] ?? MaterialDefaultPrices.bajaC;
+    final rengPrice = prices['baja_reng'] ?? MaterialDefaultPrices.bajaReng;
+    final sekrupTrussPrice = prices['sekrup_truss'] ?? MaterialDefaultPrices.sekrupTruss;
+    final sekrupGentengPrice = prices['sekrup_genteng'] ?? MaterialDefaultPrices.sekrupGenteng;
+
+    return CalculationResult(
+      requirements: [
+        MaterialRequirement(
+          key: 'baja_c',
+          name: 'Baja Ringan Canal C-75 (Batang 6m)',
+          quantity: kanalCQty,
+          unit: 'batang',
+          unitPrice: kanalPrice,
+        ),
+        MaterialRequirement(
+          key: 'baja_reng',
+          name: 'Reng Baja Ringan (Batang 6m)',
+          quantity: rengQty,
+          unit: 'batang',
+          unitPrice: rengPrice,
+        ),
+        MaterialRequirement(
+          key: 'sekrup_truss',
+          name: 'Sekrup Rangka (Truss Screw)',
+          quantity: sekrupTrussQty,
+          unit: 'pcs',
+          unitPrice: sekrupTrussPrice,
+        ),
+        MaterialRequirement(
+          key: 'sekrup_genteng',
+          name: 'Sekrup Genteng (Roofing Screw)',
+          quantity: sekrupGentengQty,
+          unit: 'pcs',
+          unitPrice: sekrupGentengPrice,
+        ),
+      ],
+    );
+  }
 }

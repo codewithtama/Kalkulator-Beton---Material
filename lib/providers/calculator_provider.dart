@@ -61,6 +61,30 @@ class CalculatorProvider with ChangeNotifier {
         return MaterialDefaultPrices.rengWood;
       case 'cat_liter':
         return MaterialDefaultPrices.catLiter;
+      case 'besi_6':
+        return MaterialDefaultPrices.besi6;
+      case 'besi_8':
+        return MaterialDefaultPrices.besi8;
+      case 'besi_10':
+        return MaterialDefaultPrices.besi10;
+      case 'besi_12':
+        return MaterialDefaultPrices.besi12;
+      case 'besi_16':
+        return MaterialDefaultPrices.besi16;
+      case 'kawat_bendrat':
+        return MaterialDefaultPrices.kawatBendrat;
+      case 'plywood_9mm':
+        return MaterialDefaultPrices.plywood9mm;
+      case 'paku':
+        return MaterialDefaultPrices.paku;
+      case 'baja_c':
+        return MaterialDefaultPrices.bajaC;
+      case 'baja_reng':
+        return MaterialDefaultPrices.bajaReng;
+      case 'sekrup_truss':
+        return MaterialDefaultPrices.sekrupTruss;
+      case 'sekrup_genteng':
+        return MaterialDefaultPrices.sekrupGenteng;
       default:
         return 0.0;
     }
@@ -91,7 +115,10 @@ class CalculatorProvider with ChangeNotifier {
       'bata_merah', 'hebel', 'semen_acian_sak', 
       'keramik_30', 'keramik_40', 'keramik_60', 'keramik_80', 
       'genteng_tanah', 'genteng_metal', 'genteng_aspal', 
-      'kayu_usuk', 'kayu_reng', 'cat_liter'
+      'kayu_usuk', 'kayu_reng', 'cat_liter',
+      'besi_6', 'besi_8', 'besi_10', 'besi_12', 'besi_16',
+      'kawat_bendrat', 'plywood_9mm', 'paku',
+      'baja_c', 'baja_reng', 'sekrup_truss', 'sekrup_genteng'
     ];
     
     for (var key in keys) {
@@ -159,6 +186,48 @@ class CalculatorProvider with ChangeNotifier {
         return Formulas.calculateCat(
           luas: area,
           lapisan: coats,
+          prices: activePrices,
+        );
+      case CalculationCategory.pondasiBatuKali:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final la = double.tryParse(inputs['lebarAtas'] ?? '') ?? 0.0;
+        final lb = double.tryParse(inputs['lebarBawah'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final adukan = inputs['adukan'] ?? '1:4';
+        return Formulas.calculatePondasiBatuKali(
+          panjang: p,
+          lebarAtas: la,
+          lebarBawah: lb,
+          tinggi: t,
+          adukan: adukan,
+          prices: activePrices,
+        );
+      case CalculationCategory.kolomBalok:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final dUtama = int.tryParse(inputs['diameterUtama'] ?? '') ?? 10;
+        final jUtama = int.tryParse(inputs['jumlahUtama'] ?? '') ?? 4;
+        final dBegel = int.tryParse(inputs['diameterBegel'] ?? '') ?? 6;
+        final jBegel = double.tryParse(inputs['jarakBegel'] ?? '') ?? 15.0;
+        final bekisting = inputs['bekisting'] == 'true';
+        final mutu = inputs['mutuBeton'] ?? 'K-225';
+        return Formulas.calculateKolomBalok(
+          panjang: p,
+          lebarCm: l,
+          tinggiCm: t,
+          diameterUtama: dUtama,
+          jumlahUtama: jUtama,
+          diameterBegel: dBegel,
+          jarakBegelCm: jBegel,
+          bekisting: bekisting,
+          mutuBeton: mutu,
+          prices: activePrices,
+        );
+      case CalculationCategory.bajaRingan:
+        final area = double.tryParse(inputs['luasAtap'] ?? '') ?? 0.0;
+        return Formulas.calculateBajaRingan(
+          luasAtap: area,
           prices: activePrices,
         );
     }
