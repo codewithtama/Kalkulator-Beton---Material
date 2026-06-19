@@ -44,6 +44,23 @@ class _SettingsScreenState extends State<SettingsScreen> {
     {'key': 'baja_reng', 'label': 'Reng Baja Ringan', 'unit': 'batang'},
     {'key': 'sekrup_truss', 'label': 'Sekrup Rangka (Truss)', 'unit': 'pcs'},
     {'key': 'sekrup_genteng', 'label': 'Sekrup Genteng', 'unit': 'pcs'},
+    {'key': 'gypsum_board', 'label': 'Papan Gypsum (1.22x2.44m)', 'unit': 'lembar'},
+    {'key': 'hollow_4x4', 'label': 'Besi Hollow 4x4 cm', 'unit': 'batang'},
+    {'key': 'hollow_2x4', 'label': 'Besi Hollow 2x4 cm', 'unit': 'batang'},
+    {'key': 'sekrup_plafon', 'label': 'Sekrup Gypsum', 'unit': 'pcs'},
+    {'key': 'compound_gypsum', 'label': 'Compound Gypsum', 'unit': 'kg'},
+    {'key': 'tape_gypsum', 'label': 'Tape Gypsum', 'unit': 'roll'},
+    {'key': 'paving_block', 'label': 'Paving Block', 'unit': 'pcs'},
+    {'key': 'kanstin', 'label': 'Kanstin Beton Pembatas', 'unit': 'pcs'},
+    {'key': 'metal_stud', 'label': 'Metal Stud 7.5cm', 'unit': 'batang'},
+    {'key': 'runner', 'label': 'U-Runner 7.5cm', 'unit': 'batang'},
+    {'key': 'daun_panel', 'label': 'Daun Panel Precast', 'unit': 'lembar'},
+    {'key': 'tiang_kolom_precast', 'label': 'Tiang Precast Beton', 'unit': 'batang'},
+    {'key': 'keramik_dinding', 'label': 'Keramik Dinding 30x60 cm', 'unit': 'dus'},
+    {'key': 'semen_instan', 'label': 'Semen Instan Perekat', 'unit': 'sak'},
+    {'key': 'semen_nat', 'label': 'Semen Pengisi Nat', 'unit': 'kg'},
+    {'key': 'waterproofing_liquid', 'label': 'Cairan Waterproofing Pelapis', 'unit': 'kg'},
+    {'key': 'sirtu', 'label': 'Material Sirtu Urug', 'unit': 'm³'},
   ];
 
   @override

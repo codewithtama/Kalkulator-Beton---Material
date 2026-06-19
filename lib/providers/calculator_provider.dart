@@ -85,6 +85,40 @@ class CalculatorProvider with ChangeNotifier {
         return MaterialDefaultPrices.sekrupTruss;
       case 'sekrup_genteng':
         return MaterialDefaultPrices.sekrupGenteng;
+      case 'gypsum_board':
+        return MaterialDefaultPrices.gypsumBoard;
+      case 'hollow_4x4':
+        return MaterialDefaultPrices.hollow4x4;
+      case 'hollow_2x4':
+        return MaterialDefaultPrices.hollow2x4;
+      case 'sekrup_plafon':
+        return MaterialDefaultPrices.sekrupPlafon;
+      case 'compound_gypsum':
+        return MaterialDefaultPrices.compoundGypsum;
+      case 'tape_gypsum':
+        return MaterialDefaultPrices.tapeGypsum;
+      case 'paving_block':
+        return MaterialDefaultPrices.pavingBlock;
+      case 'kanstin':
+        return MaterialDefaultPrices.kanstin;
+      case 'metal_stud':
+        return MaterialDefaultPrices.metalStud;
+      case 'runner':
+        return MaterialDefaultPrices.runner;
+      case 'daun_panel':
+        return MaterialDefaultPrices.daunPanel;
+      case 'tiang_kolom_precast':
+        return MaterialDefaultPrices.tiangKolomPrecast;
+      case 'keramik_dinding':
+        return MaterialDefaultPrices.keramikDinding;
+      case 'semen_instan':
+        return MaterialDefaultPrices.semenInstan;
+      case 'semen_nat':
+        return MaterialDefaultPrices.semenNat;
+      case 'waterproofing_liquid':
+        return MaterialDefaultPrices.waterproofingLiquid;
+      case 'sirtu':
+        return MaterialDefaultPrices.sirtu;
       default:
         return 0.0;
     }
@@ -118,7 +152,12 @@ class CalculatorProvider with ChangeNotifier {
       'kayu_usuk', 'kayu_reng', 'cat_liter',
       'besi_6', 'besi_8', 'besi_10', 'besi_12', 'besi_16',
       'kawat_bendrat', 'plywood_9mm', 'paku',
-      'baja_c', 'baja_reng', 'sekrup_truss', 'sekrup_genteng'
+      'baja_c', 'baja_reng', 'sekrup_truss', 'sekrup_genteng',
+      'gypsum_board', 'hollow_4x4', 'hollow_2x4', 'sekrup_plafon', 
+      'compound_gypsum', 'tape_gypsum', 'paving_block', 'kanstin', 
+      'metal_stud', 'runner', 'daun_panel', 'tiang_kolom_precast', 
+      'keramik_dinding', 'semen_instan', 'semen_nat', 
+      'waterproofing_liquid', 'sirtu'
     ];
     
     for (var key in keys) {
@@ -228,6 +267,122 @@ class CalculatorProvider with ChangeNotifier {
         final area = double.tryParse(inputs['luasAtap'] ?? '') ?? 0.0;
         return Formulas.calculateBajaRingan(
           luasAtap: area,
+          prices: activePrices,
+        );
+      case CalculationCategory.plafon:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        return Formulas.calculatePlafon(
+          luas: area,
+          prices: activePrices,
+        );
+      case CalculationCategory.tangga:
+        final anak = int.tryParse(inputs['anakTangga'] ?? '') ?? 0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final ta = double.tryParse(inputs['tinggiAnak'] ?? '') ?? 0.0;
+        final la = double.tryParse(inputs['lebarAlas'] ?? '') ?? 0.0;
+        final tp = double.tryParse(inputs['tebalPlat'] ?? '') ?? 0.0;
+        final pb = double.tryParse(inputs['panjangBordes'] ?? '') ?? 0.0;
+        final lb = double.tryParse(inputs['lebarBordes'] ?? '') ?? 0.0;
+        final tb = double.tryParse(inputs['tebalBordes'] ?? '') ?? 0.0;
+        final dUtama = int.tryParse(inputs['diameterUtama'] ?? '') ?? 10;
+        final jUtama = double.tryParse(inputs['jarakUtama'] ?? '') ?? 15.0;
+        final dBagi = int.tryParse(inputs['diameterBagi'] ?? '') ?? 8;
+        final jBagi = double.tryParse(inputs['jarakBagi'] ?? '') ?? 20.0;
+        final bekisting = inputs['bekisting'] == 'true';
+        final mutu = inputs['mutuBeton'] ?? 'K-225';
+        return Formulas.calculateTangga(
+          anakTangga: anak,
+          lebar: l,
+          tinggiAnak: ta,
+          lebarAlas: la,
+          tebalPlat: tp,
+          panjangBordes: pb,
+          lebarBordes: lb,
+          tebalBordes: tb,
+          diameterUtama: dUtama,
+          jarakUtama: jUtama,
+          diameterBagi: dBagi,
+          jarakBagi: jBagi,
+          bekisting: bekisting,
+          mutuBeton: mutu,
+          prices: activePrices,
+        );
+      case CalculationCategory.paving:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        final pk = double.tryParse(inputs['panjangKanstin'] ?? '') ?? 0.0;
+        return Formulas.calculatePaving(
+          luas: area,
+          panjangKanstin: pk,
+          prices: activePrices,
+        );
+      case CalculationCategory.partisiGypsum:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        return Formulas.calculatePartisiGypsum(
+          luas: area,
+          prices: activePrices,
+        );
+      case CalculationCategory.pagarPanel:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        return Formulas.calculatePagarPanel(
+          panjang: p,
+          tinggi: t,
+          prices: activePrices,
+        );
+      case CalculationCategory.borePile:
+        final t = int.tryParse(inputs['titik'] ?? '') ?? 0;
+        final dia = double.tryParse(inputs['diameter'] ?? '') ?? 0.0;
+        final kd = double.tryParse(inputs['kedalaman'] ?? '') ?? 0.0;
+        final dUtama = int.tryParse(inputs['diameterUtama'] ?? '') ?? 12;
+        final jUtama = int.tryParse(inputs['jumlahUtama'] ?? '') ?? 6;
+        final dSpiral = int.tryParse(inputs['diameterSpiral'] ?? '') ?? 8;
+        final jSpiral = double.tryParse(inputs['jarakSpiral'] ?? '') ?? 15.0;
+        final mutu = inputs['mutuBeton'] ?? 'K-225';
+        return Formulas.calculateBorePile(
+          titik: t,
+          diameter: dia,
+          kedalaman: kd,
+          diameterUtama: dUtama,
+          jumlahUtama: jUtama,
+          diameterSpiral: dSpiral,
+          jarakSpiral: jSpiral,
+          mutuBeton: mutu,
+          prices: activePrices,
+        );
+      case CalculationCategory.keramikDinding:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        return Formulas.calculateKeramikDinding(
+          luas: area,
+          prices: activePrices,
+        );
+      case CalculationCategory.waterproofing:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        return Formulas.calculateWaterproofing(
+          luas: area,
+          prices: activePrices,
+        );
+      case CalculationCategory.begelSpiral:
+        final t = int.tryParse(inputs['titik'] ?? '') ?? 0;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final dia = double.tryParse(inputs['diameter'] ?? '') ?? 0.0;
+        final dSpiral = int.tryParse(inputs['diameterSpiral'] ?? '') ?? 8;
+        final jSpiral = double.tryParse(inputs['jarakSpiral'] ?? '') ?? 15.0;
+        return Formulas.calculateBegelSpiral(
+          titik: t,
+          tinggi: h,
+          diameter: dia,
+          diameterSpiral: dSpiral,
+          jarakSpiral: jSpiral,
+          prices: activePrices,
+        );
+      case CalculationCategory.uruganSirtu:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tebal'] ?? '') ?? 0.0;
+        return Formulas.calculateUruganSirtu(
+          panjang: p,
+          lebar: l,
+          tebal: t,
           prices: activePrices,
         );
     }

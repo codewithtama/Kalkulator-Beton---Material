@@ -29,6 +29,26 @@ class HomeScreen extends StatelessWidget {
         return Icons.view_week; // Reinforced concrete columns/beams
       case CalculationCategory.bajaRingan:
         return Icons.architecture; // Lightweight steel truss
+      case CalculationCategory.plafon:
+        return Icons.border_all;
+      case CalculationCategory.tangga:
+        return Icons.stairs;
+      case CalculationCategory.paving:
+        return Icons.grid_view;
+      case CalculationCategory.partisiGypsum:
+        return Icons.view_day;
+      case CalculationCategory.pagarPanel:
+        return Icons.view_column;
+      case CalculationCategory.borePile:
+        return Icons.download;
+      case CalculationCategory.keramikDinding:
+        return Icons.border_outer;
+      case CalculationCategory.waterproofing:
+        return Icons.water;
+      case CalculationCategory.begelSpiral:
+        return Icons.refresh;
+      case CalculationCategory.uruganSirtu:
+        return Icons.landscape;
     }
   }
 
@@ -54,6 +74,26 @@ class HomeScreen extends StatelessWidget {
         return const Color(0xFF1E88E5);
       case CalculationCategory.bajaRingan:
         return const Color(0xFF00ACC1);
+      case CalculationCategory.plafon:
+        return const Color(0xFF00796B);
+      case CalculationCategory.tangga:
+        return const Color(0xFFE65100);
+      case CalculationCategory.paving:
+        return const Color(0xFF388E3C);
+      case CalculationCategory.partisiGypsum:
+        return const Color(0xFF455A64);
+      case CalculationCategory.pagarPanel:
+        return const Color(0xFF512DA8);
+      case CalculationCategory.borePile:
+        return const Color(0xFFD84315);
+      case CalculationCategory.keramikDinding:
+        return const Color(0xFF00ACC1);
+      case CalculationCategory.waterproofing:
+        return const Color(0xFF0288D1);
+      case CalculationCategory.begelSpiral:
+        return const Color(0xFFC2185B);
+      case CalculationCategory.uruganSirtu:
+        return const Color(0xFF795548);
     }
   }
 
@@ -79,6 +119,26 @@ class HomeScreen extends StatelessWidget {
         return 'Beton, pembesian, & bekisting';
       case CalculationCategory.bajaRingan:
         return 'Kanal C, reng, & sekrup rangka';
+      case CalculationCategory.plafon:
+        return 'Gypsum, hollow 4x4, 2x4, & compound';
+      case CalculationCategory.tangga:
+        return 'Volume cor tangga & tulangan beton';
+      case CalculationCategory.paving:
+        return 'Paving block, pasir urug, & kanstin';
+      case CalculationCategory.partisiGypsum:
+        return 'Rangka metal stud, gypsum, & sekrup';
+      case CalculationCategory.pagarPanel:
+        return 'Daun precast & tiang kolom precast';
+      case CalculationCategory.borePile:
+        return 'Volume cor bore pile & besi tulangan';
+      case CalculationCategory.keramikDinding:
+        return 'Keramik dinding, semen instan & nat';
+      case CalculationCategory.waterproofing:
+        return 'Cairan pelapis anti bocor dak';
+      case CalculationCategory.begelSpiral:
+        return 'Besi begel spiral kolom bulat';
+      case CalculationCategory.uruganSirtu:
+        return 'Volume pasir batu & faktor susut';
     }
   }
 

@@ -18,6 +18,16 @@ enum CalculationCategory {
   pondasiBatuKali,
   kolomBalok,
   bajaRingan,
+  plafon,
+  tangga,
+  paving,
+  partisiGypsum,
+  pagarPanel,
+  borePile,
+  keramikDinding,
+  waterproofing,
+  begelSpiral,
+  uruganSirtu,
 }
 
 extension CalculationCategoryExtension on CalculationCategory {
@@ -43,6 +53,26 @@ extension CalculationCategoryExtension on CalculationCategory {
         return 'Kolom & Balok';
       case CalculationCategory.bajaRingan:
         return 'Atap Baja Ringan';
+      case CalculationCategory.plafon:
+        return 'Plafon Gypsum';
+      case CalculationCategory.tangga:
+        return 'Tangga Beton';
+      case CalculationCategory.paving:
+        return 'Paving Block';
+      case CalculationCategory.partisiGypsum:
+        return 'Partisi Gypsum';
+      case CalculationCategory.pagarPanel:
+        return 'Pagar Panel Beton';
+      case CalculationCategory.borePile:
+        return 'Pondasi Bore Pile';
+      case CalculationCategory.keramikDinding:
+        return 'Keramik Dinding';
+      case CalculationCategory.waterproofing:
+        return 'Waterproofing Dak';
+      case CalculationCategory.begelSpiral:
+        return 'Begel Spiral';
+      case CalculationCategory.uruganSirtu:
+        return 'Urugan Sirtu';
     }
   }
 
@@ -69,6 +99,26 @@ extension CalculationCategoryExtension on CalculationCategory {
         return 'view_week';
       case CalculationCategory.bajaRingan:
         return 'architecture';
+      case CalculationCategory.plafon:
+        return 'border_all';
+      case CalculationCategory.tangga:
+        return 'reorder';
+      case CalculationCategory.paving:
+        return 'grid_view';
+      case CalculationCategory.partisiGypsum:
+        return 'view_day';
+      case CalculationCategory.pagarPanel:
+        return 'view_column';
+      case CalculationCategory.borePile:
+        return 'download';
+      case CalculationCategory.keramikDinding:
+        return 'border_outer';
+      case CalculationCategory.waterproofing:
+        return 'water';
+      case CalculationCategory.begelSpiral:
+        return 'refresh';
+      case CalculationCategory.uruganSirtu:
+        return 'landscape';
     }
   }
 }
@@ -115,4 +165,35 @@ class MaterialDefaultPrices {
   static const double bajaReng = 45000.0;      // per batang 6m
   static const double sekrupTruss = 250.0;     // per pcs
   static const double sekrupGenteng = 350.0;   // per pcs
+
+  // Plafon & Partisi Gypsum
+  static const double gypsumBoard = 65000.0;     // per lembar (1.22 x 2.44 m)
+  static const double hollow4x4 = 30000.0;       // per batang 4m
+  static const double hollow2x4 = 22000.0;       // per batang 4m
+  static const double sekrupPlafon = 150.0;      // per pcs
+  static const double compoundGypsum = 8000.0;   // per kg
+  static const double tapeGypsum = 20000.0;      // per roll
+  
+  // Paving Block
+  static const double pavingBlock = 1500.0;      // per pcs
+  static const double kanstin = 25000.0;         // per pcs
+  
+  // Partisi Dinding Gypsum
+  static const double metalStud = 35000.0;       // per batang 3m
+  static const double runner = 32000.0;          // per batang 3m
+  
+  // Pagar Panel Precast
+  static const double daunPanel = 125000.0;      // per pcs
+  static const double tiangKolomPrecast = 250000.0; // per pcs
+  
+  // Keramik Dinding
+  static const double keramikDinding = 85000.0;  // per dus (~Rp 85rb/m2)
+  static const double semenInstan = 95000.0;     // per sak 40kg
+  static const double semenNat = 15000.0;        // per kg
+  
+  // Waterproofing
+  static const double waterproofingLiquid = 55000.0; // per kg
+  
+  // Sirtu
+  static const double sirtu = 260000.0;          // per m3
 }

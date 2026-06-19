@@ -39,6 +39,24 @@ class MaterialCard extends StatelessWidget {
       return Icons.push_pin;
     } else if (k.contains('baja') || k.contains('sekrup')) {
       return Icons.hardware;
+    } else if (k.contains('gypsum')) {
+      return Icons.view_quilt;
+    } else if (k.contains('hollow') || k.contains('stud') || k.contains('runner')) {
+      return Icons.grid_3x3;
+    } else if (k.contains('paving')) {
+      return Icons.grid_view;
+    } else if (k.contains('kanstin')) {
+      return Icons.splitscreen;
+    } else if (k.contains('panel') || k.contains('precast')) {
+      return Icons.view_day;
+    } else if (k.contains('waterproofing')) {
+      return Icons.water;
+    } else if (k.contains('sirtu')) {
+      return Icons.landscape;
+    } else if (k.contains('compound')) {
+      return Icons.cloud;
+    } else if (k.contains('tape')) {
+      return Icons.linear_scale;
     }
     return Icons.build;
   }
@@ -71,6 +89,24 @@ class MaterialCard extends StatelessWidget {
       return Colors.grey.shade700;
     } else if (k.contains('baja') || k.contains('sekrup')) {
       return Colors.cyan.shade800;
+    } else if (k.contains('gypsum')) {
+      return Colors.teal.shade700;
+    } else if (k.contains('hollow') || k.contains('stud') || k.contains('runner')) {
+      return Colors.blueGrey.shade700;
+    } else if (k.contains('paving')) {
+      return Colors.indigo.shade400;
+    } else if (k.contains('kanstin')) {
+      return Colors.grey.shade700;
+    } else if (k.contains('panel') || k.contains('precast')) {
+      return Colors.blueGrey.shade600;
+    } else if (k.contains('waterproofing')) {
+      return Colors.indigo.shade600;
+    } else if (k.contains('sirtu')) {
+      return Colors.brown.shade400;
+    } else if (k.contains('compound')) {
+      return Colors.grey.shade400;
+    } else if (k.contains('tape')) {
+      return Colors.teal.shade300;
     }
     return Colors.amber;
   }
