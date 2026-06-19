@@ -57,6 +57,26 @@ class MaterialCard extends StatelessWidget {
       return Icons.cloud;
     } else if (k.contains('tape')) {
       return Icons.linear_scale;
+    } else if (k.contains('bondex')) {
+      return Icons.grid_goldenratio;
+    } else if (k.contains('wiremesh')) {
+      return Icons.grid_4x4;
+    } else if (k.contains('tanah') || k.contains('urug')) {
+      return Icons.grass;
+    } else if (k.contains('glass')) {
+      return Icons.widgets_outlined;
+    } else if (k.contains('alum')) {
+      return Icons.crop_square;
+    } else if (k.contains('seal')) {
+      return Icons.colorize;
+    } else if (k.contains('buis')) {
+      return Icons.circle_outlined;
+    } else if (k.contains('plv') || k.contains('pvc') || k.contains('plafon_pvc') || k.contains('lis_pvc')) {
+      return Icons.border_style;
+    } else if (k.contains('plint')) {
+      return Icons.border_bottom;
+    } else if (k.contains('pipa') || k.contains('pipe') || k.contains('fitting')) {
+      return Icons.plumbing;
     }
     return Icons.build;
   }
@@ -107,6 +127,26 @@ class MaterialCard extends StatelessWidget {
       return Colors.grey.shade400;
     } else if (k.contains('tape')) {
       return Colors.teal.shade300;
+    } else if (k.contains('bondex')) {
+      return Colors.blue.shade900;
+    } else if (k.contains('wiremesh')) {
+      return Colors.red.shade700;
+    } else if (k.contains('tanah') || k.contains('urug')) {
+      return Colors.brown.shade600;
+    } else if (k.contains('glass')) {
+      return Colors.cyan;
+    } else if (k.contains('alum')) {
+      return Colors.teal.shade800;
+    } else if (k.contains('seal')) {
+      return Colors.blue.shade300;
+    } else if (k.contains('buis')) {
+      return Colors.grey.shade500;
+    } else if (k.contains('plv') || k.contains('pvc') || k.contains('plafon_pvc') || k.contains('lis_pvc')) {
+      return Colors.purple.shade700;
+    } else if (k.contains('plint')) {
+      return Colors.amber.shade900;
+    } else if (k.contains('pipa') || k.contains('pipe') || k.contains('fitting')) {
+      return Colors.blue.shade700;
     }
     return Colors.amber;
   }

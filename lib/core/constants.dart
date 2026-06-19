@@ -28,6 +28,27 @@ enum CalculationCategory {
   waterproofing,
   begelSpiral,
   uruganSirtu,
+  // 20 New Categories
+  cakarAyam,
+  floordeck,
+  platSlab,
+  cutFill,
+  retainingWall,
+  septicTank,
+  batako,
+  glassBlock,
+  kusenAluminium,
+  floorScreed,
+  pondasiSumuran,
+  plafonPvc,
+  plintLantai,
+  kusenKayu,
+  bakKontrol,
+  grassBlock,
+  kanopi,
+  railing,
+  bajaWf,
+  plumbing,
 }
 
 extension CalculationCategoryExtension on CalculationCategory {
@@ -73,11 +94,51 @@ extension CalculationCategoryExtension on CalculationCategory {
         return 'Begel Spiral';
       case CalculationCategory.uruganSirtu:
         return 'Urugan Sirtu';
+      // 20 New Categories
+      case CalculationCategory.cakarAyam:
+        return 'Pondasi Cakar Ayam';
+      case CalculationCategory.floordeck:
+        return 'Plat Floor Deck';
+      case CalculationCategory.platSlab:
+        return 'Plat Slab Beton';
+      case CalculationCategory.cutFill:
+        return 'Urugan & Pemadatan';
+      case CalculationCategory.retainingWall:
+        return 'Dinding Penahan Tanah';
+      case CalculationCategory.septicTank:
+        return 'Septic Tank & Resapan';
+      case CalculationCategory.batako:
+        return 'Dinding Batako';
+      case CalculationCategory.glassBlock:
+        return 'Dinding Glass Block';
+      case CalculationCategory.kusenAluminium:
+        return 'Kusen Aluminium';
+      case CalculationCategory.floorScreed:
+        return 'Plesteran Screed';
+      case CalculationCategory.pondasiSumuran:
+        return 'Pondasi Sumuran';
+      case CalculationCategory.plafonPvc:
+        return 'Plafon PVC';
+      case CalculationCategory.plintLantai:
+        return 'Plint Keramik';
+      case CalculationCategory.kusenKayu:
+        return 'Kusen Pintu Kayu';
+      case CalculationCategory.bakKontrol:
+        return 'Bak Kontrol Air';
+      case CalculationCategory.grassBlock:
+        return 'Grass Block';
+      case CalculationCategory.kanopi:
+        return 'Kanopi Minimalis';
+      case CalculationCategory.railing:
+        return 'Railing Logam';
+      case CalculationCategory.bajaWf:
+        return 'Struktur Baja WF';
+      case CalculationCategory.plumbing:
+        return 'Instalasi Pipa Air';
     }
   }
 
   String get iconAsset {
-    // We'll use Material Icons dynamically, but this is a helper string
     switch (this) {
       case CalculationCategory.beton:
         return 'water_drop';
@@ -119,6 +180,47 @@ extension CalculationCategoryExtension on CalculationCategory {
         return 'refresh';
       case CalculationCategory.uruganSirtu:
         return 'landscape';
+      // 20 New Categories
+      case CalculationCategory.cakarAyam:
+        return 'grid_3x3';
+      case CalculationCategory.floordeck:
+        return 'view_quilt';
+      case CalculationCategory.platSlab:
+        return 'table_rows';
+      case CalculationCategory.cutFill:
+        return 'align_vertical_bottom';
+      case CalculationCategory.retainingWall:
+        return 'reorder';
+      case CalculationCategory.septicTank:
+        return 'waves';
+      case CalculationCategory.batako:
+        return 'view_in_ar';
+      case CalculationCategory.glassBlock:
+        return 'widgets';
+      case CalculationCategory.kusenAluminium:
+        return 'crop_square';
+      case CalculationCategory.floorScreed:
+        return 'line_style';
+      case CalculationCategory.pondasiSumuran:
+        return 'adjust';
+      case CalculationCategory.plafonPvc:
+        return 'border_style';
+      case CalculationCategory.plintLantai:
+        return 'border_bottom';
+      case CalculationCategory.kusenKayu:
+        return 'meeting_room';
+      case CalculationCategory.bakKontrol:
+        return 'inbox';
+      case CalculationCategory.grassBlock:
+        return 'eco';
+      case CalculationCategory.kanopi:
+        return 'umbrella';
+      case CalculationCategory.railing:
+        return 'fence';
+      case CalculationCategory.bajaWf:
+        return 'view_headline';
+      case CalculationCategory.plumbing:
+        return 'plumbing';
     }
   }
 }
@@ -152,7 +254,7 @@ class MaterialDefaultPrices {
   
   static const double catLiter = 45000.0;      // per liter (approx Rp 225k/5L)
 
-  // New materials
+  // Iron & Framework
   static const double besi6 = 35000.0;         // per batang 12m
   static const double besi8 = 55000.0;         // per batang 12m
   static const double besi10 = 85000.0;        // per batang 12m
@@ -196,4 +298,36 @@ class MaterialDefaultPrices {
   
   // Sirtu
   static const double sirtu = 260000.0;          // per m3
+
+  // New materials for 20 new calculators
+  static const double bondex = 90000.0;         // per meter
+  static const double wiremeshM6 = 380000.0;     // per lembar
+  static const double wiremeshM8 = 550000.0;     // per lembar
+  static const double wiremeshM10 = 850000.0;    // per lembar
+  static const double tanahUrug = 180000.0;      // per m3
+  static const double batako = 3500.0;           // per bh
+  static const double glassBlock = 22000.0;      // per bh
+  static const double kusenAluminium = 120000.0; // per batang 6m
+  static const double sealant = 35000.0;         // per tube
+  static const double buisBeton = 175000.0;      // per unit 80cm
+  static const double plafonPvc = 25000.0;       // per m1
+  static const double lisPvc = 15000.0;          // per m1
+  static const double plintKeramik = 12000.0;    // per pcs
+  static const double balokKayu = 4500000.0;     // per m3
+  static const double lemKayu = 3000.0;          // per kg (wood glue)
+  static const double platChecker = 350000.0;    // per pcs
+  static const double grassBlock = 22000.0;      // per pcs
+  static const double polycarbonate = 150000.0;  // per m2
+  static const double spandek = 75000.0;         // per m2
+  static const double pipaStainless = 180000.0;  // per batang 6m
+  static const double bajaWf = 16000.0;          // per kg (steel beam weight rate)
+  static const double bajaWf150 = 2688000.0;     // per batang 12m (14kg/m * 12m * 16000)
+  static const double bajaWf200 = 4089600.0;     // per batang 12m (21.3kg/m * 12m * 16000)
+  static const double bajaWf250 = 5683200.0;     // per batang 12m (29.6kg/m * 12m * 16000)
+  static const double catAntiKarat = 65000.0;    // per kg
+  static const double pipaPvcAW = 45000.0;       // per batang 4m
+  static const double pipaPvcD = 95000.0;        // per batang 4m
+  static const double fittingPvc = 8000.0;       // per pcs
+  static const double lemPipa = 15000.0;         // per tube
+  static const double sealTape = 5000.0;         // per roll
 }

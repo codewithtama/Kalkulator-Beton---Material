@@ -49,6 +49,47 @@ class HomeScreen extends StatelessWidget {
         return Icons.refresh;
       case CalculationCategory.uruganSirtu:
         return Icons.landscape;
+      // 20 New Categories
+      case CalculationCategory.cakarAyam:
+        return Icons.grid_3x3;
+      case CalculationCategory.floordeck:
+        return Icons.view_quilt;
+      case CalculationCategory.platSlab:
+        return Icons.table_rows;
+      case CalculationCategory.cutFill:
+        return Icons.align_vertical_bottom;
+      case CalculationCategory.retainingWall:
+        return Icons.reorder;
+      case CalculationCategory.septicTank:
+        return Icons.waves;
+      case CalculationCategory.batako:
+        return Icons.view_in_ar;
+      case CalculationCategory.glassBlock:
+        return Icons.widgets;
+      case CalculationCategory.kusenAluminium:
+        return Icons.crop_square;
+      case CalculationCategory.floorScreed:
+        return Icons.line_style;
+      case CalculationCategory.pondasiSumuran:
+        return Icons.adjust;
+      case CalculationCategory.plafonPvc:
+        return Icons.border_style;
+      case CalculationCategory.plintLantai:
+        return Icons.border_bottom;
+      case CalculationCategory.kusenKayu:
+        return Icons.meeting_room;
+      case CalculationCategory.bakKontrol:
+        return Icons.inbox;
+      case CalculationCategory.grassBlock:
+        return Icons.eco;
+      case CalculationCategory.kanopi:
+        return Icons.umbrella;
+      case CalculationCategory.railing:
+        return Icons.fence;
+      case CalculationCategory.bajaWf:
+        return Icons.view_headline;
+      case CalculationCategory.plumbing:
+        return Icons.plumbing;
     }
   }
 
@@ -94,6 +135,47 @@ class HomeScreen extends StatelessWidget {
         return const Color(0xFFC2185B);
       case CalculationCategory.uruganSirtu:
         return const Color(0xFF795548);
+      // 20 New Categories
+      case CalculationCategory.cakarAyam:
+        return const Color(0xFFD84315);
+      case CalculationCategory.floordeck:
+        return const Color(0xFF1565C0);
+      case CalculationCategory.platSlab:
+        return const Color(0xFF2E7D32);
+      case CalculationCategory.cutFill:
+        return const Color(0xFF8D6E63);
+      case CalculationCategory.retainingWall:
+        return const Color(0xFF4E342E);
+      case CalculationCategory.septicTank:
+        return const Color(0xFF0277BD);
+      case CalculationCategory.batako:
+        return const Color(0xFF558B2F);
+      case CalculationCategory.glassBlock:
+        return const Color(0xFF00ACC1);
+      case CalculationCategory.kusenAluminium:
+        return const Color(0xFF00838F);
+      case CalculationCategory.floorScreed:
+        return const Color(0xFF78909C);
+      case CalculationCategory.pondasiSumuran:
+        return const Color(0xFF37474F);
+      case CalculationCategory.plafonPvc:
+        return const Color(0xFF8E24AA);
+      case CalculationCategory.plintLantai:
+        return const Color(0xFF009688);
+      case CalculationCategory.kusenKayu:
+        return const Color(0xFFD84315);
+      case CalculationCategory.bakKontrol:
+        return const Color(0xFF455A64);
+      case CalculationCategory.grassBlock:
+        return const Color(0xFF2E7D32);
+      case CalculationCategory.kanopi:
+        return const Color(0xFFAD1457);
+      case CalculationCategory.railing:
+        return const Color(0xFF6A1B9A);
+      case CalculationCategory.bajaWf:
+        return const Color(0xFF303F9F);
+      case CalculationCategory.plumbing:
+        return const Color(0xFF00796B);
     }
   }
 
@@ -139,6 +221,47 @@ class HomeScreen extends StatelessWidget {
         return 'Besi begel spiral kolom bulat';
       case CalculationCategory.uruganSirtu:
         return 'Volume pasir batu & faktor susut';
+      // 20 New Categories
+      case CalculationCategory.cakarAyam:
+        return 'Pondasi tapak cakar ayam & besi';
+      case CalculationCategory.floordeck:
+        return 'Plat lantai bondex & wiremesh';
+      case CalculationCategory.platSlab:
+        return 'Slab beton bertulang wiremesh';
+      case CalculationCategory.cutFill:
+        return 'Tanah urug merah & pemadatan';
+      case CalculationCategory.retainingWall:
+        return 'Batu belah, adukan & pvc suling';
+      case CalculationCategory.septicTank:
+        return 'Bata merah, ijuk, kerikil filter & pipa';
+      case CalculationCategory.batako:
+        return 'Pasangan batako, semen & pasir';
+      case CalculationCategory.glassBlock:
+        return 'Glass block, perekat mortar & angkur';
+      case CalculationCategory.kusenAluminium:
+        return 'Batang kusen, sealant silikon & baut';
+      case CalculationCategory.floorScreed:
+        return 'Screeding lantai, semen & pasir';
+      case CalculationCategory.pondasiSumuran:
+        return 'Buis beton & cor pengisi';
+      case CalculationCategory.plafonPvc:
+        return 'Plafon PVC, rangka hollow & lis';
+      case CalculationCategory.plintLantai:
+        return 'Plint keramik lantai & adukan';
+      case CalculationCategory.kusenKayu:
+        return 'Kusen pintu kayu, lem & paku';
+      case CalculationCategory.bakKontrol:
+        return 'Bata merah bak kontrol & plat besi';
+      case CalculationCategory.grassBlock:
+        return 'Grass block paving, humus & rumput';
+      case CalculationCategory.kanopi:
+        return 'Rangka hollow minimalis & atap';
+      case CalculationCategory.railing:
+        return 'Pipa stainless & hollow vertical';
+      case CalculationCategory.bajaWf:
+        return 'Struktur baja WF-beam & gusset';
+      case CalculationCategory.plumbing:
+        return 'Pipa PVC AW/D, fitting & solvent';
     }
   }
 

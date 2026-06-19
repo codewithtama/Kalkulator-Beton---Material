@@ -51,6 +51,20 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
   String _selectedBoreMutuBeton = 'K-225';
   int _selectedBegelSpiralDiameter = 8;
 
+  // 20 Newer Calculator States
+  String _selectedWiremeshType = 'M8';
+  int _selectedLayer = 1;
+  String _selectedCompactorTanah = 'Biasa';
+  String _selectedRetainingWallCampuran = '1:4';
+  String _selectedBatakoCampuran = '1:4';
+  String _selectedGlassBlockSize = '20x20';
+  String _selectedAluminiumProfile = '3 inch';
+  String _selectedFloorScreedCampuran = '1:4';
+  String _selectedPlintUkuran = '10x40';
+  String _selectedKanopiAtapType = 'Polycarbonate';
+  String _selectedBajaTipeWF = 'WF 200';
+  String _selectedPlumbingDiameter = '1/2"';
+
   @override
   void initState() {
     super.initState();
@@ -176,6 +190,103 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         _controllers['lebar'] = TextEditingController(text: txt('lebar'));
         _controllers['tebal'] = TextEditingController(text: txt('tebal', def: '10'));
         break;
+      case CalculationCategory.cakarAyam:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '1.0'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '1.0'));
+        _controllers['tebal'] = TextEditingController(text: txt('tebal', def: '0.25'));
+        _controllers['jarakBesi'] = TextEditingController(text: txt('jarakBesi', def: '15'));
+        _selectedBesiUtama = int.tryParse(txt('diameterUtama', def: '10')) ?? 10;
+        _selectedMutuBetonStruktur = txt('mutuBeton', def: 'K-225');
+        break;
+      case CalculationCategory.floordeck:
+      case CalculationCategory.platSlab:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '6.0'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '4.0'));
+        _controllers['tebal'] = TextEditingController(text: txt('tebal', def: '0.12'));
+        _selectedWiremeshType = txt('tipeWiremesh', def: 'M8');
+        _selectedLayer = int.tryParse(txt('layer', def: '1')) ?? 1;
+        break;
+      case CalculationCategory.cutFill:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '10.0'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '5.0'));
+        _controllers['tebal'] = TextEditingController(text: txt('tebal', def: '50'));
+        _selectedCompactorTanah = txt('jenisTanah', def: 'Biasa');
+        break;
+      case CalculationCategory.retainingWall:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '10.0'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '2.0'));
+        _controllers['lebarAtas'] = TextEditingController(text: txt('lebarAtas', def: '0.3'));
+        _controllers['lebarBawah'] = TextEditingController(text: txt('lebarBawah', def: '0.8'));
+        _selectedRetainingWallCampuran = txt('campuran', def: '1:4');
+        break;
+      case CalculationCategory.septicTank:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '2.0'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '1.5'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '1.5'));
+        break;
+      case CalculationCategory.batako:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '10.0'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '3.0'));
+        _selectedBatakoCampuran = txt('campuran', def: '1:4');
+        break;
+      case CalculationCategory.glassBlock:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '3.0'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '2.0'));
+        _selectedGlassBlockSize = txt('ukuran', def: '20x20');
+        break;
+      case CalculationCategory.kusenAluminium:
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '0.9'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '2.1'));
+        _selectedAluminiumProfile = txt('profile', def: '3 inch');
+        break;
+      case CalculationCategory.floorScreed:
+        _controllers['luas'] = TextEditingController(text: txt('luas', def: '24.0'));
+        _controllers['tebal'] = TextEditingController(text: txt('tebal', def: '3.0'));
+        _selectedFloorScreedCampuran = txt('campuran', def: '1:4');
+        break;
+      case CalculationCategory.pondasiSumuran:
+        _controllers['diameter'] = TextEditingController(text: txt('diameter', def: '80'));
+        _controllers['kedalaman'] = TextEditingController(text: txt('kedalaman', def: '3.0'));
+        _controllers['jumlahTitik'] = TextEditingController(text: txt('jumlahTitik', def: '4'));
+        break;
+      case CalculationCategory.plafonPvc:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '4.0'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '3.0'));
+        break;
+      case CalculationCategory.plintLantai:
+        _controllers['keliling'] = TextEditingController(text: txt('keliling', def: '14.0'));
+        _selectedPlintUkuran = txt('ukuran', def: '10x40');
+        break;
+      case CalculationCategory.kusenKayu:
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '0.9'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '2.1'));
+        break;
+      case CalculationCategory.bakKontrol:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '0.5'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '0.5'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '0.5'));
+        _controllers['jumlah'] = TextEditingController(text: txt('jumlah', def: '1'));
+        break;
+      case CalculationCategory.grassBlock:
+        _controllers['luas'] = TextEditingController(text: txt('luas', def: '20.0'));
+        break;
+      case CalculationCategory.kanopi:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '5.0'));
+        _controllers['lebar'] = TextEditingController(text: txt('lebar', def: '3.0'));
+        _selectedKanopiAtapType = txt('atapType', def: 'Polycarbonate');
+        break;
+      case CalculationCategory.railing:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '6.0'));
+        _controllers['tinggi'] = TextEditingController(text: txt('tinggi', def: '0.9'));
+        break;
+      case CalculationCategory.bajaWf:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '12.0'));
+        _selectedBajaTipeWF = txt('tipeWF', def: 'WF 200');
+        break;
+      case CalculationCategory.plumbing:
+        _controllers['panjang'] = TextEditingController(text: txt('panjang', def: '20.0'));
+        _selectedPlumbingDiameter = txt('diameter', def: '1/2"');
+        break;
     }
   }
 
@@ -237,6 +348,45 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
         break;
       case CalculationCategory.begelSpiral:
         inputs['diameterSpiral'] = _selectedBegelSpiralDiameter.toString();
+        break;
+      case CalculationCategory.cakarAyam:
+        inputs['diameterUtama'] = _selectedBesiUtama.toString();
+        inputs['mutuBeton'] = _selectedMutuBetonStruktur;
+        break;
+      case CalculationCategory.floordeck:
+      case CalculationCategory.platSlab:
+        inputs['tipeWiremesh'] = _selectedWiremeshType;
+        inputs['layer'] = _selectedLayer.toString();
+        break;
+      case CalculationCategory.cutFill:
+        inputs['jenisTanah'] = _selectedCompactorTanah;
+        break;
+      case CalculationCategory.retainingWall:
+        inputs['campuran'] = _selectedRetainingWallCampuran;
+        break;
+      case CalculationCategory.batako:
+        inputs['campuran'] = _selectedBatakoCampuran;
+        break;
+      case CalculationCategory.glassBlock:
+        inputs['ukuran'] = _selectedGlassBlockSize;
+        break;
+      case CalculationCategory.kusenAluminium:
+        inputs['profile'] = _selectedAluminiumProfile;
+        break;
+      case CalculationCategory.floorScreed:
+        inputs['campuran'] = _selectedFloorScreedCampuran;
+        break;
+      case CalculationCategory.plintLantai:
+        inputs['ukuran'] = _selectedPlintUkuran;
+        break;
+      case CalculationCategory.kanopi:
+        inputs['atapType'] = _selectedKanopiAtapType;
+        break;
+      case CalculationCategory.bajaWf:
+        inputs['tipeWF'] = _selectedBajaTipeWF;
+        break;
+      case CalculationCategory.plumbing:
+        inputs['diameter'] = _selectedPlumbingDiameter;
         break;
       default:
         break;
@@ -1334,6 +1484,291 @@ class _CalculatorScreenState extends State<CalculatorScreen> {
               labelText: 'Tebal Urugan',
               suffixText: 'cm',
               hintText: 'Contoh: 10',
+            ),
+          ],
+        );
+      case CalculationCategory.cakarAyam:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Tapak', suffixText: 'm', hintText: 'Contoh: 1.0'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Tapak', suffixText: 'm', hintText: 'Contoh: 1.0'),
+            CustomInputField(controller: _controllers['tebal']!, labelText: 'Tebal Tapak', suffixText: 'm', hintText: 'Contoh: 0.25'),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Besi Utama', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<int>(
+                        initialValue: _selectedBesiUtama,
+                        items: [8, 10, 12, 16].map((e) => DropdownMenuItem(value: e, child: Text('Ø $e mm'))).toList(),
+                        onChanged: (val) { if (val != null) setState(() => _selectedBesiUtama = val); },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: CustomInputField(controller: _controllers['jarakBesi']!, labelText: 'Jarak Besi', suffixText: 'cm', hintText: 'Contoh: 15'),
+                ),
+              ],
+            ),
+            const SizedBox(height: 12),
+            const Text('Mutu Beton (SNI)', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedMutuBetonStruktur,
+              items: ['K-175', 'K-225', 'K-250', 'K-300'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedMutuBetonStruktur = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.floordeck:
+      case CalculationCategory.platSlab:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Plat', suffixText: 'm', hintText: 'Contoh: 6.0'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Plat', suffixText: 'm', hintText: 'Contoh: 4.0'),
+            CustomInputField(controller: _controllers['tebal']!, labelText: 'Tebal Plat', suffixText: 'm', hintText: 'Contoh: 0.12'),
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Tipe Wiremesh', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<String>(
+                        initialValue: _selectedWiremeshType,
+                        items: ['M6', 'M8', 'M10'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+                        onChanged: (val) { if (val != null) setState(() => _selectedWiremeshType = val); },
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text('Jumlah Layer', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+                      const SizedBox(height: 6),
+                      DropdownButtonFormField<int>(
+                        initialValue: _selectedLayer,
+                        items: [1, 2].map((e) => DropdownMenuItem(value: e, child: Text('$e Layer'))).toList(),
+                        onChanged: (val) { if (val != null) setState(() => _selectedLayer = val); },
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      case CalculationCategory.cutFill:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Area', suffixText: 'm', hintText: 'Contoh: 10.0'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Area', suffixText: 'm', hintText: 'Contoh: 5.0'),
+            CustomInputField(controller: _controllers['tebal']!, labelText: 'Tebal Urugan', suffixText: 'cm', hintText: 'Contoh: 50'),
+            const Text('Jenis Tanah Urug', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedCompactorTanah,
+              items: ['Biasa', 'Kohesif Padat'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedCompactorTanah = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.retainingWall:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Dinding', suffixText: 'm', hintText: 'Contoh: 10.0'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Dinding', suffixText: 'm', hintText: 'Contoh: 2.0'),
+            CustomInputField(controller: _controllers['lebarAtas']!, labelText: 'Lebar Atas', suffixText: 'm', hintText: 'Contoh: 0.3'),
+            CustomInputField(controller: _controllers['lebarBawah']!, labelText: 'Lebar Bawah', suffixText: 'm', hintText: 'Contoh: 0.8'),
+            const Text('Campuran Adukan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedRetainingWallCampuran,
+              items: ['1:3', '1:4', '1:5'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedRetainingWallCampuran = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.septicTank:
+        return Column(
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Tank', suffixText: 'm', hintText: 'Contoh: 2.0'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Tank', suffixText: 'm', hintText: 'Contoh: 1.5'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Tank', suffixText: 'm', hintText: 'Contoh: 1.5'),
+          ],
+        );
+      case CalculationCategory.batako:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Dinding', suffixText: 'm', hintText: 'Contoh: 10.0'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Dinding', suffixText: 'm', hintText: 'Contoh: 3.0'),
+            const Text('Campuran Adukan', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedBatakoCampuran,
+              items: ['1:3', '1:4', '1:5'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedBatakoCampuran = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.glassBlock:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Area', suffixText: 'm', hintText: 'Contoh: 3.0'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Area', suffixText: 'm', hintText: 'Contoh: 2.0'),
+            const Text('Ukuran Glass Block', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedGlassBlockSize,
+              items: ['20x20', '19x19'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedGlassBlockSize = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.kusenAluminium:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Kusen', suffixText: 'm', hintText: 'Contoh: 0.9'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Kusen', suffixText: 'm', hintText: 'Contoh: 2.1'),
+            const Text('Profil Aluminium', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedAluminiumProfile,
+              items: ['3 inch', '4 inch'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedAluminiumProfile = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.floorScreed:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['luas']!, labelText: 'Luas Screed', suffixText: 'm²', hintText: 'Contoh: 24.0'),
+            CustomInputField(controller: _controllers['tebal']!, labelText: 'Tebal Screed', suffixText: 'cm', hintText: 'Contoh: 3.0'),
+            const Text('Campuran Screed', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedFloorScreedCampuran,
+              items: ['1:3', '1:4', '1:5'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedFloorScreedCampuran = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.pondasiSumuran:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['diameter']!, labelText: 'Diameter Buis', suffixText: 'cm', hintText: 'Contoh: 80'),
+            CustomInputField(controller: _controllers['kedalaman']!, labelText: 'Kedalaman Sumuran', suffixText: 'm', hintText: 'Contoh: 3.0'),
+            CustomInputField(controller: _controllers['jumlahTitik']!, labelText: 'Jumlah Titik', suffixText: 'titik', hintText: 'Contoh: 4'),
+          ],
+        );
+      case CalculationCategory.plafonPvc:
+        return Column(
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Ruangan', suffixText: 'm', hintText: 'Contoh: 4.0'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Ruangan', suffixText: 'm', hintText: 'Contoh: 3.0'),
+          ],
+        );
+      case CalculationCategory.plintLantai:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['keliling']!, labelText: 'Keliling Ruangan', suffixText: 'm', hintText: 'Contoh: 14.0'),
+            const Text('Ukuran Plint', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedPlintUkuran,
+              items: ['10x30', '10x40', '10x60'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedPlintUkuran = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.kusenKayu:
+        return Column(
+          children: [
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Kusen', suffixText: 'm', hintText: 'Contoh: 0.9'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Kusen', suffixText: 'm', hintText: 'Contoh: 2.1'),
+          ],
+        );
+      case CalculationCategory.bakKontrol:
+        return Column(
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Bak', suffixText: 'm', hintText: 'Contoh: 0.5'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Bak', suffixText: 'm', hintText: 'Contoh: 0.5'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Bak', suffixText: 'm', hintText: 'Contoh: 0.5'),
+            CustomInputField(controller: _controllers['jumlah']!, labelText: 'Jumlah Bak', suffixText: 'bh', hintText: 'Contoh: 1'),
+          ],
+        );
+      case CalculationCategory.grassBlock:
+        return Column(
+          children: [
+            CustomInputField(controller: _controllers['luas']!, labelText: 'Luas Grass Block', suffixText: 'm²', hintText: 'Contoh: 20.0'),
+          ],
+        );
+      case CalculationCategory.kanopi:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Kanopi', suffixText: 'm', hintText: 'Contoh: 5.0'),
+            CustomInputField(controller: _controllers['lebar']!, labelText: 'Lebar Kanopi', suffixText: 'm', hintText: 'Contoh: 3.0'),
+            const Text('Jenis Atap Kanopi', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedKanopiAtapType,
+              items: ['Polycarbonate', 'Spandek'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedKanopiAtapType = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.railing:
+        return Column(
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Railing', suffixText: 'm', hintText: 'Contoh: 6.0'),
+            CustomInputField(controller: _controllers['tinggi']!, labelText: 'Tinggi Railing', suffixText: 'm', hintText: 'Contoh: 0.9'),
+          ],
+        );
+      case CalculationCategory.bajaWf:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Profil WF', suffixText: 'm', hintText: 'Contoh: 12.0'),
+            const Text('Profil Baja WF', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedBajaTipeWF,
+              items: ['WF 150', 'WF 200', 'WF 250'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedBajaTipeWF = val); },
+            ),
+          ],
+        );
+      case CalculationCategory.plumbing:
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomInputField(controller: _controllers['panjang']!, labelText: 'Panjang Pipa', suffixText: 'm', hintText: 'Contoh: 20.0'),
+            const Text('Diameter Pipa PVC', style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+            const SizedBox(height: 6),
+            DropdownButtonFormField<String>(
+              initialValue: _selectedPlumbingDiameter,
+              items: ['1/2"', '3/4"', '2"', '3"', '4"'].map((e) => DropdownMenuItem(value: e, child: Text(e))).toList(),
+              onChanged: (val) { if (val != null) setState(() => _selectedPlumbingDiameter = val); },
             ),
           ],
         );

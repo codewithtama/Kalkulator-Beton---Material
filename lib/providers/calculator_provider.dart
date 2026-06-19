@@ -119,6 +119,65 @@ class CalculatorProvider with ChangeNotifier {
         return MaterialDefaultPrices.waterproofingLiquid;
       case 'sirtu':
         return MaterialDefaultPrices.sirtu;
+      // 20 New Calculator Materials
+      case 'bondex':
+        return MaterialDefaultPrices.bondex;
+      case 'wiremesh_m6':
+        return MaterialDefaultPrices.wiremeshM6;
+      case 'wiremesh_m8':
+        return MaterialDefaultPrices.wiremeshM8;
+      case 'wiremesh_m10':
+        return MaterialDefaultPrices.wiremeshM10;
+      case 'tanah_urug':
+        return MaterialDefaultPrices.tanahUrug;
+      case 'batako':
+        return MaterialDefaultPrices.batako;
+      case 'glass_block':
+        return MaterialDefaultPrices.glassBlock;
+      case 'kusen_aluminium':
+        return MaterialDefaultPrices.kusenAluminium;
+      case 'sealant':
+        return MaterialDefaultPrices.sealant;
+      case 'buis_beton':
+        return MaterialDefaultPrices.buisBeton;
+      case 'plafon_pvc':
+        return MaterialDefaultPrices.plafonPvc;
+      case 'lis_pvc':
+        return MaterialDefaultPrices.lisPvc;
+      case 'plint_keramik':
+        return MaterialDefaultPrices.plintKeramik;
+      case 'balok_kayu':
+        return MaterialDefaultPrices.balokKayu;
+      case 'lem_kayu':
+        return MaterialDefaultPrices.lemKayu;
+      case 'plat_checker':
+        return MaterialDefaultPrices.platChecker;
+      case 'grass_block':
+        return MaterialDefaultPrices.grassBlock;
+      case 'polycarbonate':
+        return MaterialDefaultPrices.polycarbonate;
+      case 'spandek':
+        return MaterialDefaultPrices.spandek;
+      case 'pipa_stainless':
+        return MaterialDefaultPrices.pipaStainless;
+      case 'baja_wf150':
+        return MaterialDefaultPrices.bajaWf150;
+      case 'baja_wf200':
+        return MaterialDefaultPrices.bajaWf200;
+      case 'baja_wf250':
+        return MaterialDefaultPrices.bajaWf250;
+      case 'cat_anti_karat':
+        return MaterialDefaultPrices.catAntiKarat;
+      case 'pipa_pvc_aw':
+        return MaterialDefaultPrices.pipaPvcAW;
+      case 'pipa_pvc_d':
+        return MaterialDefaultPrices.pipaPvcD;
+      case 'fitting_pvc':
+        return MaterialDefaultPrices.fittingPvc;
+      case 'lem_pipa':
+        return MaterialDefaultPrices.lemPipa;
+      case 'seal_tape':
+        return MaterialDefaultPrices.sealTape;
       default:
         return 0.0;
     }
@@ -157,7 +216,15 @@ class CalculatorProvider with ChangeNotifier {
       'compound_gypsum', 'tape_gypsum', 'paving_block', 'kanstin', 
       'metal_stud', 'runner', 'daun_panel', 'tiang_kolom_precast', 
       'keramik_dinding', 'semen_instan', 'semen_nat', 
-      'waterproofing_liquid', 'sirtu'
+      'waterproofing_liquid', 'sirtu',
+      // New ones
+      'bondex', 'wiremesh_m6', 'wiremesh_m8', 'wiremesh_m10',
+      'tanah_urug', 'batako', 'glass_block', 'kusen_aluminium',
+      'sealant', 'buis_beton', 'plafon_pvc', 'lis_pvc', 'plint_keramik',
+      'balok_kayu', 'lem_kayu', 'plat_checker', 'grass_block',
+      'polycarbonate', 'spandek', 'pipa_stainless', 'baja_wf150',
+      'baja_wf200', 'baja_wf250', 'cat_anti_karat', 'pipa_pvc_aw',
+      'pipa_pvc_d', 'fitting_pvc', 'lem_pipa', 'seal_tape'
     ];
     
     for (var key in keys) {
@@ -383,6 +450,213 @@ class CalculatorProvider with ChangeNotifier {
           panjang: p,
           lebar: l,
           tebal: t,
+          prices: activePrices,
+        );
+      // 20 New Categories
+      case CalculationCategory.cakarAyam:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tebal'] ?? '') ?? 0.0;
+        final dUtama = int.tryParse(inputs['diameterUtama'] ?? '') ?? 10;
+        final jBesi = double.tryParse(inputs['jarakBesi'] ?? '') ?? 15.0;
+        final mutu = inputs['mutuBeton'] ?? 'K-225';
+        return Formulas.calculateCakarAyam(
+          panjang: p,
+          lebar: l,
+          tebal: t,
+          diameterBesi: dUtama,
+          jarakBesi: jBesi,
+          mutuBeton: mutu,
+          prices: activePrices,
+        );
+      case CalculationCategory.floordeck:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tebal'] ?? '') ?? 0.12;
+        final wire = inputs['tipeWiremesh'] ?? 'M8';
+        final lay = int.tryParse(inputs['layer'] ?? '') ?? 1;
+        return Formulas.calculateFloordeck(
+          panjang: p,
+          lebar: l,
+          tebal: t,
+          tipeWiremesh: wire,
+          layer: lay,
+          prices: activePrices,
+        );
+      case CalculationCategory.platSlab:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tebal'] ?? '') ?? 0.12;
+        final wire = inputs['tipeWiremesh'] ?? 'M8';
+        final lay = int.tryParse(inputs['layer'] ?? '') ?? 1;
+        return Formulas.calculatePlatSlab(
+          panjang: p,
+          lebar: l,
+          tebal: t,
+          tipeWiremesh: wire,
+          layer: lay,
+          prices: activePrices,
+        );
+      case CalculationCategory.cutFill:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tebal'] ?? '') ?? 0.0;
+        final type = inputs['jenisTanah'] ?? 'Biasa';
+        return Formulas.calculateCutFill(
+          panjang: p,
+          lebar: l,
+          tebal: t,
+          jenisTanah: type,
+          prices: activePrices,
+        );
+      case CalculationCategory.retainingWall:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final la = double.tryParse(inputs['lebarAtas'] ?? '') ?? 0.3;
+        final lb = double.tryParse(inputs['lebarBawah'] ?? '') ?? 0.8;
+        final mix = inputs['campuran'] ?? '1:4';
+        return Formulas.calculateRetainingWall(
+          panjang: p,
+          tinggi: h,
+          lebarAtas: la,
+          lebarBawah: lb,
+          campuran: mix,
+          prices: activePrices,
+        );
+      case CalculationCategory.septicTank:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 2.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 1.5;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 1.5;
+        return Formulas.calculateSepticTank(
+          panjang: p,
+          lebar: l,
+          tinggi: h,
+          prices: activePrices,
+        );
+      case CalculationCategory.batako:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final mix = inputs['campuran'] ?? '1:4';
+        return Formulas.calculateBatako(
+          panjang: p,
+          tinggi: t,
+          campuran: mix,
+          prices: activePrices,
+        );
+      case CalculationCategory.glassBlock:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final t = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final size = inputs['ukuran'] ?? '20x20';
+        return Formulas.calculateGlassBlock(
+          panjang: p,
+          tinggi: t,
+          ukuran: size,
+          prices: activePrices,
+        );
+      case CalculationCategory.kusenAluminium:
+        final w = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final prof = inputs['profile'] ?? '3 inch';
+        return Formulas.calculateKusenAluminium(
+          lebar: w,
+          tinggi: h,
+          profile: prof,
+          prices: activePrices,
+        );
+      case CalculationCategory.floorScreed:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        final thick = double.tryParse(inputs['tebal'] ?? '') ?? 3.0;
+        final mix = inputs['campuran'] ?? '1:4';
+        return Formulas.calculateFloorScreed(
+          luas: area,
+          tebal: thick,
+          campuran: mix,
+          prices: activePrices,
+        );
+      case CalculationCategory.pondasiSumuran:
+        final dia = double.tryParse(inputs['diameter'] ?? '') ?? 80.0;
+        final kd = double.tryParse(inputs['kedalaman'] ?? '') ?? 0.0;
+        final points = int.tryParse(inputs['jumlahTitik'] ?? '') ?? 1;
+        return Formulas.calculatePondasiSumuran(
+          diameter: dia,
+          kedalaman: kd,
+          jumlahTitik: points,
+          prices: activePrices,
+        );
+      case CalculationCategory.plafonPvc:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        return Formulas.calculatePlafonPvc(
+          panjang: p,
+          lebar: l,
+          prices: activePrices,
+        );
+      case CalculationCategory.plintLantai:
+        final kel = double.tryParse(inputs['keliling'] ?? '') ?? 0.0;
+        final size = inputs['ukuran'] ?? '10x40';
+        return Formulas.calculatePlintLantai(
+          keliling: kel,
+          ukuran: size,
+          prices: activePrices,
+        );
+      case CalculationCategory.kusenKayu:
+        final w = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        return Formulas.calculateKusenKayu(
+          lebar: w,
+          tinggi: h,
+          prices: activePrices,
+        );
+      case CalculationCategory.bakKontrol:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 0.0;
+        final qty = int.tryParse(inputs['jumlah'] ?? '') ?? 1;
+        return Formulas.calculateBakKontrol(
+          panjang: p,
+          lebar: l,
+          tinggi: h,
+          jumlah: qty,
+          prices: activePrices,
+        );
+      case CalculationCategory.grassBlock:
+        final area = double.tryParse(inputs['luas'] ?? '') ?? 0.0;
+        return Formulas.calculateGrassBlock(
+          luas: area,
+          prices: activePrices,
+        );
+      case CalculationCategory.kanopi:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final l = double.tryParse(inputs['lebar'] ?? '') ?? 0.0;
+        final type = inputs['atapType'] ?? 'Polycarbonate';
+        return Formulas.calculateKanopi(
+          panjang: p,
+          lebar: l,
+          atapType: type,
+          prices: activePrices,
+        );
+      case CalculationCategory.railing:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final h = double.tryParse(inputs['tinggi'] ?? '') ?? 0.9;
+        return Formulas.calculateRailing(
+          panjang: p,
+          tinggi: h,
+          prices: activePrices,
+        );
+      case CalculationCategory.bajaWf:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final type = inputs['tipeWF'] ?? 'WF 200';
+        return Formulas.calculateBajaWf(
+          panjang: p,
+          tipeWF: type,
+          prices: activePrices,
+        );
+      case CalculationCategory.plumbing:
+        final p = double.tryParse(inputs['panjang'] ?? '') ?? 0.0;
+        final dia = inputs['diameter'] ?? '1/2"';
+        return Formulas.calculatePlumbing(
+          panjang: p,
+          diameter: dia,
           prices: activePrices,
         );
     }

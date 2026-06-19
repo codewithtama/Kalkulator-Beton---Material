@@ -57,6 +57,47 @@ class HistoryScreen extends StatelessWidget {
           return Icons.refresh;
         case CalculationCategory.uruganSirtu:
           return Icons.landscape;
+        // 20 New Categories
+        case CalculationCategory.cakarAyam:
+          return Icons.grid_3x3;
+        case CalculationCategory.floordeck:
+          return Icons.view_quilt;
+        case CalculationCategory.platSlab:
+          return Icons.table_rows;
+        case CalculationCategory.cutFill:
+          return Icons.align_vertical_bottom;
+        case CalculationCategory.retainingWall:
+          return Icons.reorder;
+        case CalculationCategory.septicTank:
+          return Icons.waves;
+        case CalculationCategory.batako:
+          return Icons.view_in_ar;
+        case CalculationCategory.glassBlock:
+          return Icons.widgets;
+        case CalculationCategory.kusenAluminium:
+          return Icons.crop_square;
+        case CalculationCategory.floorScreed:
+          return Icons.line_style;
+        case CalculationCategory.pondasiSumuran:
+          return Icons.adjust;
+        case CalculationCategory.plafonPvc:
+          return Icons.border_style;
+        case CalculationCategory.plintLantai:
+          return Icons.border_bottom;
+        case CalculationCategory.kusenKayu:
+          return Icons.meeting_room;
+        case CalculationCategory.bakKontrol:
+          return Icons.inbox;
+        case CalculationCategory.grassBlock:
+          return Icons.eco;
+        case CalculationCategory.kanopi:
+          return Icons.umbrella;
+        case CalculationCategory.railing:
+          return Icons.fence;
+        case CalculationCategory.bajaWf:
+          return Icons.view_headline;
+        case CalculationCategory.plumbing:
+          return Icons.plumbing;
       }
     } catch (_) {
       return Icons.construction;
@@ -109,6 +150,47 @@ class HistoryScreen extends StatelessWidget {
           return const Color(0xFFC2185B);
         case CalculationCategory.uruganSirtu:
           return const Color(0xFF795548);
+        // 20 New Categories
+        case CalculationCategory.cakarAyam:
+          return const Color(0xFFD84315);
+        case CalculationCategory.floordeck:
+          return const Color(0xFF1565C0);
+        case CalculationCategory.platSlab:
+          return const Color(0xFF2E7D32);
+        case CalculationCategory.cutFill:
+          return const Color(0xFF8D6E63);
+        case CalculationCategory.retainingWall:
+          return const Color(0xFF4E342E);
+        case CalculationCategory.septicTank:
+          return const Color(0xFF0277BD);
+        case CalculationCategory.batako:
+          return const Color(0xFF558B2F);
+        case CalculationCategory.glassBlock:
+          return const Color(0xFF00ACC1);
+        case CalculationCategory.kusenAluminium:
+          return const Color(0xFF00838F);
+        case CalculationCategory.floorScreed:
+          return const Color(0xFF78909C);
+        case CalculationCategory.pondasiSumuran:
+          return const Color(0xFF37474F);
+        case CalculationCategory.plafonPvc:
+          return const Color(0xFF8E24AA);
+        case CalculationCategory.plintLantai:
+          return const Color(0xFF009688);
+        case CalculationCategory.kusenKayu:
+          return const Color(0xFFD84315);
+        case CalculationCategory.bakKontrol:
+          return const Color(0xFF455A64);
+        case CalculationCategory.grassBlock:
+          return const Color(0xFF2E7D32);
+        case CalculationCategory.kanopi:
+          return const Color(0xFFAD1457);
+        case CalculationCategory.railing:
+          return const Color(0xFF6A1B9A);
+        case CalculationCategory.bajaWf:
+          return const Color(0xFF303F9F);
+        case CalculationCategory.plumbing:
+          return const Color(0xFF00796B);
       }
     } catch (_) {
       return Colors.amber;
